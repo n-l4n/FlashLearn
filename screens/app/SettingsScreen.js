@@ -17,7 +17,6 @@ export function SettingsScreen({navigation}) {
       <SafeAreaView style={authStyles.content}>
         <Appbar.Header style={authStyles.appBar}>
           <Appbar.Content title="Einstellungen" />
-          <Appbar.Action icon="logout" onPress={() => logout()} />
         </Appbar.Header>
       </SafeAreaView>
     </>

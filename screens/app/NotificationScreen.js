@@ -17,7 +17,6 @@ export function NotificationScreen({navigation}) {
       <SafeAreaView style={authStyles.content}>
         <Appbar.Header style={authStyles.appBar}>
           <Appbar.Content title="Benachrichtigungen" />
-          <Appbar.Action icon="logout" onPress={() => logout()} />
         </Appbar.Header>
       </SafeAreaView>
     </>
