@@ -1,16 +1,47 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {HomeScreen} from './HomeScreen';
+import {appColors} from '../../theme';
+import {HomeNavigationContainer} from './HomeNavigationContainer';
+import {NotificationScreen} from './NotificationScreen';
+import {SettingsScreen} from './SettingsScreen';
 
 export function AppNavigationContainer() {
-  const Stack = createStackNavigator();
+  const Tab = createMaterialBottomTabNavigator();
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" headerMode="none">
-        <Stack.Screen name="Home" component={HomeScreen} />
-      </Stack.Navigator>
+      <Tab.Navigator
+        initialRouteName="Decks"
+        headerMode="none"
+        shifting={true}
+        sceneAnimationEnabled={false}>
+        <Tab.Screen
+          name="Decks"
+          component={HomeNavigationContainer}
+          options={{
+            tabBarIcon: 'folder-multiple',
+            tabBarColor: appColors.primary,
+          }}
+        />
+        <Tab.Screen
+          name="Nachrichten"
+          component={NotificationScreen}
+          options={{
+            tabBarIcon: 'bell',
+            tabBarColor: appColors.primary,
+          }}
+        />
+        <Tab.Screen
+          name="Einstellungen"
+          component={SettingsScreen}
+          options={{
+            tabBarIcon: 'settings',
+            tabBarColor: appColors.primary,
+          }}
+        />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
