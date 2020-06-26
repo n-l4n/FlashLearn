@@ -12,26 +12,26 @@ import React, {useState} from 'react';
 import {authStyles} from './AuthStyles';
 import auth from '@react-native-firebase/auth';
 import {globalStyles} from '../../GlobalStyles';
+import {useBaseState} from '../../BaseState';
 
-function login(mail, password, setLoading, setError) {
+function login(mail, password, baseState) {
   if (!mail || !password) {
-    setLoading(false);
-    setError('input_fail');
+    baseState.setLoading(false);
+    baseState.setError('input_fail');
     return;
   }
   auth()
     .signInWithEmailAndPassword(mail, password)
     .catch(error => {
-      setError(error);
-      setLoading(false);
+      baseState.setError(error);
+      baseState.setLoading(false);
     });
 }
 
 export function LoginScreen({navigation}) {
+  const baseState = useBaseState();
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
 
   return (
     <>
@@ -72,17 +72,19 @@ export function LoginScreen({navigation}) {
             Oder registrieren
           </Button>
         </View>
-        <Snackbar visible={error} onDismiss={() => setError(null)}>
+        <Snackbar
+          visible={baseState.error}
+          onDismiss={() => baseState.setError(null)}>
           Beim Einloggen ist etwas schief gelaufen.
         </Snackbar>
         <FAB
           style={globalStyles.fab}
           icon="login"
-          loading={loading}
-          disabled={loading}
+          loading={baseState.loading}
+          disabled={baseState.loading}
           onPress={() => {
-            setLoading(true);
-            login(mail, password, setLoading, setError);
+            baseState.setLoading(true);
+            login(mail, password, baseState);
           }}
         />
       </SafeAreaView>

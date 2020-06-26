@@ -5,31 +5,31 @@ import {appColors} from '../../theme';
 import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {globalStyles} from '../../GlobalStyles';
+import {useBaseState} from '../../BaseState';
 
-function sendForgotPassword(mail, setPasswordSent, setLoading, setError) {
+function sendForgotPassword(mail, setPasswordSent, baseState) {
   if (!mail) {
-    setLoading(false);
-    setError('input_fail');
+    baseState.setLoading(false);
+    baseState.setError('input_fail');
     return;
   }
   auth()
     .sendPasswordResetEmail(mail)
     .then(() => {
       setPasswordSent(true);
-      setError(null);
-      setLoading(false);
+      baseState.setError(null);
+      baseState.setLoading(false);
     })
     .catch(error => {
-      setLoading(false);
-      setError(error);
+      baseState.setLoading(false);
+      baseState.setError(error);
     });
 }
 
 export function ForgotPwScreen({navigation}) {
+  const baseState = useBaseState();
   const [mail, setMail] = useState('');
   const [passwordSent, setPasswordSent] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
 
   return (
     <>
@@ -55,20 +55,20 @@ export function ForgotPwScreen({navigation}) {
         <FAB
           style={globalStyles.fab}
           icon="check"
-          loading={loading}
-          disabled={loading}
+          loading={baseState.loading}
+          disabled={baseState.loading}
           onPress={() => {
-            setLoading(true);
-            sendForgotPassword(mail, setPasswordSent, setLoading, setError);
+            baseState.setLoading(true);
+            sendForgotPassword(mail, setPasswordSent, baseState);
           }}
         />
         <Snackbar
-          visible={passwordSent || error}
+          visible={passwordSent || baseState.error}
           onDismiss={() => {
             setPasswordSent(false);
-            setError(null);
+            baseState.setError(null);
           }}>
-          {error
+          {baseState.error
             ? 'Beim Zurücksetzen Deines Passworts ist etwas schief gelaufen.'
             : 'Link zum Zurücksetzen versandt.'}
         </Snackbar>

@@ -13,11 +13,12 @@ import {authStyles} from './AuthStyles';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {globalStyles} from '../../GlobalStyles';
+import {useBaseState} from '../../BaseState';
 
-function signUp(mail, name, password, setLoading, setError) {
+function signUp(mail, name, password, baseState) {
   if (!mail || !name || !password) {
-    setLoading(false);
-    setError('input_fail');
+    baseState.setLoading(false);
+    baseState.setError('input_fail');
     return;
   }
   auth()
@@ -31,17 +32,16 @@ function signUp(mail, name, password, setLoading, setError) {
         });
     })
     .catch(error => {
-      setError(error);
-      setLoading(false);
+      baseState.setError(error);
+      baseState.setLoading(false);
     });
 }
 
 export function SignUpScreen({navigation}) {
+  const baseState = useBaseState();
   const [mail, setMail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
 
   return (
     <>
@@ -87,17 +87,17 @@ export function SignUpScreen({navigation}) {
             Oder einloggen
           </Button>
         </View>
-        <Snackbar visible={error} onDismiss={() => setError(null)}>
+        <Snackbar visible={baseState.error} onDismiss={() => baseState.setError(null)}>
           Beim Registrieren ist etwas schief gelaufen.
         </Snackbar>
         <FAB
           style={globalStyles.fab}
           icon="check"
-          loading={loading}
-          disabled={loading}
+          loading={baseState.loading}
+          disabled={baseState.loading}
           onPress={() => {
-            setLoading(true);
-            signUp(mail, name, password, setLoading, setError);
+            baseState.setLoading(true);
+            signUp(mail, name, password, baseState);
           }}
         />
       </SafeAreaView>
