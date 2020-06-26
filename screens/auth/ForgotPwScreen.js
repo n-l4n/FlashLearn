@@ -6,17 +6,30 @@ import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {globalStyles} from '../../GlobalStyles';
 
-function sendForgotPassword(mail, setPasswordSent) {
+function sendForgotPassword(mail, setPasswordSent, setLoading, setError) {
+  if (!mail) {
+    setLoading(false);
+    setError('input_fail');
+    return;
+  }
   auth()
     .sendPasswordResetEmail(mail)
     .then(() => {
       setPasswordSent(true);
+      setError(null);
+      setLoading(false);
+    })
+    .catch(error => {
+      setLoading(false);
+      setError(error);
     });
 }
 
 export function ForgotPwScreen({navigation}) {
   const [mail, setMail] = useState('');
   const [passwordSent, setPasswordSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
 
   return (
     <>
@@ -42,10 +55,22 @@ export function ForgotPwScreen({navigation}) {
         <FAB
           style={globalStyles.fab}
           icon="check"
-          onPress={() => sendForgotPassword(mail, setPasswordSent)}
+          loading={loading}
+          disabled={loading}
+          onPress={() => {
+            setLoading(true);
+            sendForgotPassword(mail, setPasswordSent, setLoading, setError);
+          }}
         />
-        <Snackbar visible={passwordSent}>
-          Link zum Zurücksetzen versandt.
+        <Snackbar
+          visible={passwordSent || error}
+          onDismiss={() => {
+            setPasswordSent(false);
+            setError(null);
+          }}>
+          {error
+            ? 'Beim Zurücksetzen Deines Passworts ist etwas schief gelaufen.'
+            : 'Link zum Zurücksetzen versandt.'}
         </Snackbar>
       </SafeAreaView>
     </>

@@ -1,22 +1,37 @@
 import {SafeAreaView, StatusBar, View} from 'react-native';
-import {Appbar, Button, FAB, Headline, TextInput} from 'react-native-paper';
+import {
+  Appbar,
+  Button,
+  FAB,
+  Headline,
+  Snackbar,
+  TextInput,
+} from 'react-native-paper';
 import {appColors} from '../../theme';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {authStyles} from './AuthStyles';
 import auth from '@react-native-firebase/auth';
 import {globalStyles} from '../../GlobalStyles';
 
-function login(mail, password) {
+function login(mail, password, setLoading, setError) {
+  if (!mail || !password) {
+    setLoading(false);
+    setError('input_fail');
+    return;
+  }
   auth()
     .signInWithEmailAndPassword(mail, password)
     .catch(error => {
-      console.log(error);
+      setError(error);
+      setLoading(false);
     });
 }
 
 export function LoginScreen({navigation}) {
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
 
   return (
     <>
@@ -44,7 +59,7 @@ export function LoginScreen({navigation}) {
             left={
               <TextInput.Icon color={appColors.textIconColor} name="lock" />
             }
-            label="Password"
+            label="Passwort"
             value={password}
             onChangeText={text => setPassword(text)}
             secureTextEntry={true}
@@ -57,10 +72,18 @@ export function LoginScreen({navigation}) {
             Oder registrieren
           </Button>
         </View>
+        <Snackbar visible={error} onDismiss={() => setError(null)}>
+          Beim Einloggen ist etwas schief gelaufen.
+        </Snackbar>
         <FAB
           style={globalStyles.fab}
           icon="login"
-          onPress={() => login(mail, password)}
+          loading={loading}
+          disabled={loading}
+          onPress={() => {
+            setLoading(true);
+            login(mail, password, setLoading, setError);
+          }}
         />
       </SafeAreaView>
     </>
