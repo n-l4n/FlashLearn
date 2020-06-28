@@ -1,12 +1,12 @@
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {HomeScreen} from './HomeScreen';
-import {appColors} from '../../theme';
+import {HomeScreen} from '../screen/HomeScreen';
+import {appColors} from '../../../../theme';
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {NewDeckScreen} from './NewDeckScreen';
-import {DeckScreen} from './DeckScreen';
-import {DeckShareScreen} from './DeckShareScreen';
+import {NewDeckScreen} from '../screen/NewDeckScreen';
+import {DeckScreen} from '../screen/DeckScreen';
+import {DeckShareScreen} from '../screen/DeckShareScreen';
 
 export function HomeNavigationContainer() {
   const Stack = createStackNavigator();

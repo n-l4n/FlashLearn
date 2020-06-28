@@ -1,10 +1,10 @@
 import {SafeAreaView, StatusBar, View} from 'react-native';
-import {authStyles} from '../auth/AuthStyles';
+import {authStyles} from '../../../auth/AuthStyles';
 import {ActivityIndicator, Appbar} from 'react-native-paper';
-import {appColors} from '../../theme';
+import {appColors} from '../../../../theme';
 import React from 'react';
-import {useDeckBaseState} from '../../BaseState';
-import {useLoadDeck} from '../../db/DeckLoadHelper';
+import {useDeckBaseState} from '../../../../BaseState';
+import {useLoadDeck} from '../../../../db/DeckLoadHelper';
 
 function LoadingPlaceholder() {
   return (

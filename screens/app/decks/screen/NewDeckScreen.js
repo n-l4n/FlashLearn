@@ -1,14 +1,14 @@
 import {SafeAreaView, StatusBar, View} from 'react-native';
-import {authStyles} from '../auth/AuthStyles';
+import {authStyles} from '../../../auth/AuthStyles';
 import {Appbar, Button, FAB, Snackbar, TextInput} from 'react-native-paper';
-import {globalStyles} from '../../GlobalStyles';
+import {globalStyles} from '../../../../GlobalStyles';
 import React, {useState, useEffect} from 'react';
-import {useBaseState} from '../../BaseState';
-import {DeckQueryHelper} from '../../db/DeckQueryHelper';
-import {Deck} from '../../db/Deck';
-import {appColors} from '../../theme';
-import {DeckCrudHelper} from '../../db/DeckCrudHelper';
-import {AuthHelper} from '../../db/AuthHelper';
+import {useBaseState} from '../../../../BaseState';
+import {DeckQueryHelper} from '../../../../db/DeckQueryHelper';
+import {Deck} from '../../../../db/Deck';
+import {appColors} from '../../../../theme';
+import {DeckCrudHelper} from '../../../../db/DeckCrudHelper';
+import {AuthHelper} from '../../../../db/AuthHelper';
 
 function createDeck(deck, baseState, navigation) {
   deck.ownerId = AuthHelper.userId();

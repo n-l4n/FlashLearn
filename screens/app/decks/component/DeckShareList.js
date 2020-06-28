@@ -3,7 +3,7 @@ import {FlatList, StyleSheet, Dimensions, View} from 'react-native';
 import {IconButton, List} from 'react-native-paper';
 import {Avatar} from 'react-native-paper';
 import md5 from 'blueimp-md5';
-import {appColors} from '../../theme';
+import {appColors} from '../../../../theme';
 
 const styles = StyleSheet.create({
   listItem: {

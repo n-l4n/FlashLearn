@@ -1,12 +1,12 @@
 import {SafeAreaView, StatusBar, View} from 'react-native';
-import {authStyles} from '../auth/AuthStyles';
+import {authStyles} from '../../../auth/AuthStyles';
 import {ActivityIndicator, Appbar, FAB} from 'react-native-paper';
-import {globalStyles} from '../../GlobalStyles';
+import {globalStyles} from '../../../../GlobalStyles';
 import React, {useState, useEffect} from 'react';
-import {useBaseState, useDeckBaseState} from '../../BaseState';
-import {appColors} from '../../theme';
-import {useLoadDeck} from '../../db/DeckLoadHelper';
-import {BaseDeckScreen} from './BaseDeckScreen';
+import {useBaseState, useDeckBaseState} from '../../../../BaseState';
+import {appColors} from '../../../../theme';
+import {useLoadDeck} from '../../../../db/DeckLoadHelper';
+import {BaseDeckScreen} from '../base/BaseDeckScreen';
 
 function DeckScreenImpl(baseState, navigation) {
   return (
