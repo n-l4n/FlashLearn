@@ -38,6 +38,11 @@ export function HomeScreen({navigation}) {
         </Appbar.Header>
         <DeckList
           decks={decks}
+          onDeckPress={deck =>
+            navigation.navigate('Deck', {
+              deckId: deck.id,
+            })
+          }
           onEdit={deck =>
             navigation.navigate('NewDeck', {
               deckId: deck.id,

@@ -17,8 +17,6 @@ export class DeckCrudHelper {
     const id = '' + deck.id;
     delete deck.id;
 
-    console.log(id);
-
     firestore()
       .collection('decks')
       .doc(id)
@@ -29,5 +27,32 @@ export class DeckCrudHelper {
       .catch(() => {
         onResult(false);
       });
+  }
+
+  static useShareDeck(deck, newShareMail, onResult) {
+    if (deck.shares.includes(newShareMail)) {
+      onResult(false);
+      return;
+    }
+
+    deck.shares.push(newShareMail);
+
+    this.useUpdateDeck(deck, onResult);
+  }
+
+  static useUnshareDeck(deck, shareMail, onResult) {
+    if (!deck.shares.includes(shareMail)) {
+      onResult(false);
+      return;
+    }
+
+    let index = deck.shares.indexOf(shareMail);
+    if (index !== -1) {
+      deck.shares.splice(index, 1);
+      this.useUpdateDeck(deck, onResult);
+      return;
+    }
+
+    onResult(false);
   }
 }

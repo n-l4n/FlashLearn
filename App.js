@@ -13,7 +13,6 @@ import {AppNavigationContainer} from './screens/app/AppNavigationContainer';
 import {LoadingScreen} from './screens/auth/LoadingScreen';
 
 const App: () => React$Node = () => {
-  // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 

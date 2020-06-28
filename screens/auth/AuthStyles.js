@@ -10,6 +10,10 @@ export const authStyles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
   },
+  contentNoCenter: {
+    height: '100%',
+    width: '100%',
+  },
   logo: {
     marginTop: 32,
     fontWeight: 'bold',
