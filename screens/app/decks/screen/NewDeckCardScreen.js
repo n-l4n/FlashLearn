@@ -62,7 +62,11 @@ export class NewDeckCardScreen extends BaseDeckScreen {
   onDeckLoaded(deck) {
     const cardId = this.getNavigationParam('cardId');
     if (cardId !== 'new') {
-      this.state.card = deck.cards.find(item => item.id === cardId);
+      const card = deck.cards.find(item => item.id === cardId);
+      if (!card) {
+        return;
+      }
+      this.state.card = card;
       if (this.state.card.question) {
         this.state.question = this.state.card.question;
       }

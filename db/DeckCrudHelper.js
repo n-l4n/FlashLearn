@@ -34,15 +34,15 @@ export class DeckCrudHelper {
     delete deck.id;
 
     firestore()
-        .collection('decks')
-        .doc(id)
-        .delete(deck)
-        .then(() => {
-          onResult(true);
-        })
-        .catch(() => {
-          onResult(false);
-        });
+      .collection('decks')
+      .doc(id)
+      .delete(deck)
+      .then(() => {
+        onResult(true);
+      })
+      .catch(() => {
+        onResult(false);
+      });
   }
 
   static addCardToDeck(deck, card, onResult) {
@@ -62,16 +62,16 @@ export class DeckCrudHelper {
     this.updateDeck(deck, onResult);
   }
 
-    static deleteCardInDeck(deck, card, onResult) {
-        const index = deck.cards.findIndex(foundCard => foundCard.id === card.id);
-        if (index === -1) {
-            onResult(false);
-            return;
-        }
-        deck.cards.splice(index, 1);
-
-        this.updateDeck(deck, onResult);
+  static deleteCardInDeck(deck, card, onResult) {
+    const index = deck.cards.findIndex(foundCard => foundCard.id === card.id);
+    if (index === -1) {
+      onResult(false);
+      return;
     }
+    deck.cards.splice(index, 1);
+
+    this.updateDeck(deck, onResult);
+  }
 
   static shareDeck(deck, newShareMail, onResult) {
     if (deck.shares.includes(newShareMail)) {
