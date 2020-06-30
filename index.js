@@ -2,6 +2,7 @@
  * @format
  */
 
+import 'react-native-get-random-values';
 import 'react-native-gesture-handler';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import * as React from 'react';

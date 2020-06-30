@@ -11,7 +11,16 @@ import {BaseDeckScreen} from '../base/BaseDeckScreen';
 function DeckScreenImpl(baseState, navigation) {
   return (
     <>
-      <FAB style={globalStyles.fab} icon="plus" onPress={() => {}} />
+      <FAB
+        style={globalStyles.fab}
+        icon="plus"
+        onPress={() => {
+          navigation.navigate('NewDeckCard', {
+            deckId: baseState.deck.id,
+            cardId: 'new',
+          });
+        }}
+      />
     </>
   );
 }

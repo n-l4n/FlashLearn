@@ -7,6 +7,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NewDeckScreen} from '../screen/NewDeckScreen';
 import {DeckScreen} from '../screen/DeckScreen';
 import {DeckShareScreen} from '../screen/DeckShareScreen';
+import {NewDeckCardScreen} from '../screen/NewDeckCardScreen';
 
 export function HomeNavigationContainer() {
   const Stack = createStackNavigator();
@@ -17,6 +18,7 @@ export function HomeNavigationContainer() {
       <Stack.Screen name="NewDeck" component={NewDeckScreen} />
       <Stack.Screen name="Deck" component={DeckScreen} />
       <Stack.Screen name="ShareDeck" component={DeckShareScreen} />
+      <Stack.Screen name="NewDeckCard" component={NewDeckCardScreen} />
     </Stack.Navigator>
   );
 }
