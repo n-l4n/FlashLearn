@@ -24,6 +24,9 @@ export class NewDeckScreen extends BaseDeckScreen {
       <Appbar.Header style={authStyles.appBar}>
         <Appbar.BackAction onPress={() => this.navigation.goBack()} />
         <Appbar.Content title="Neues Deck" />
+        {this.getNavigationParam('deckId') !== 'new' && (
+          <Appbar.Action icon={'delete'} onPress={() => {}} />
+        )}
       </Appbar.Header>
     );
   }

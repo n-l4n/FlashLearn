@@ -95,6 +95,9 @@ export class NewDeckCardScreen extends BaseDeckScreen {
       <Appbar.Header style={authStyles.appBar}>
         <Appbar.BackAction onPress={() => this.navigation.goBack()} />
         <Appbar.Content title="Neue Karte" />
+        {this.getNavigationParam('cardId') !== 'new' && (
+          <Appbar.Action icon={'delete'} onPress={() => {}} />
+        )}
       </Appbar.Header>
     );
   }
