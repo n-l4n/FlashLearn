@@ -21,6 +21,7 @@ export class DeckScreen extends BaseDeckScreen {
             });
           }}
         />
+        <Appbar.Action icon="play-circle" onPress={() => {}} />
       </Appbar.Header>
     );
   }
@@ -28,8 +29,24 @@ export class DeckScreen extends BaseDeckScreen {
   buildContent() {
     return (
       <>
-        <BoxList deck={this.state.deck} onBoxPress={box => {}} />
-        <Button mode="text" color={appColors.accent} onPress={() => {}}>
+        <BoxList
+          deck={this.state.deck}
+          onBoxPress={box => {
+            this.navigation.navigate('Box', {
+              deckId: this.state.deck.id,
+              box: box,
+            });
+          }}
+        />
+        <Button
+          mode="text"
+          color={appColors.accent}
+          onPress={() => {
+            this.navigation.navigate('Box', {
+              deckId: this.state.deck.id,
+              box: -1,
+            });
+          }}>
           Alle Karten anzeigen
         </Button>
         <FAB

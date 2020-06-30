@@ -32,7 +32,7 @@ export class DeckCrudHelper {
   static addCardToDeck(deck, card, onResult) {
     deck.cards.push(card);
 
-    this.useUpdateDeck(deck, onResult);
+    this.updateDeck(deck, onResult);
   }
 
   static updateCardInDeck(deck, card, onResult) {
@@ -43,7 +43,7 @@ export class DeckCrudHelper {
     }
     deck.cards[index] = card;
 
-    this.useUpdateDeck(deck, onResult);
+    this.updateDeck(deck, onResult);
   }
 
   static shareDeck(deck, newShareMail, onResult) {
@@ -54,7 +54,7 @@ export class DeckCrudHelper {
 
     deck.shares.push(newShareMail);
 
-    this.useUpdateDeck(deck, onResult);
+    this.updateDeck(deck, onResult);
   }
 
   static unshareDeck(deck, shareMail, onResult) {
@@ -66,7 +66,7 @@ export class DeckCrudHelper {
     let index = deck.shares.indexOf(shareMail);
     if (index !== -1) {
       deck.shares.splice(index, 1);
-      this.useUpdateDeck(deck, onResult);
+      this.updateDeck(deck, onResult);
       return;
     }
 
