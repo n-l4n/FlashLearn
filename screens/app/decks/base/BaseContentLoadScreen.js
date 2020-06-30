@@ -7,14 +7,12 @@ import React from 'react';
 
 export default class BaseContentLoadScreen extends BaseStatefulScreen {
   render() {
-    const content =
-      this.isContentReady() != null
-        ? this.buildContent()
-        : this.buildLoadingContent();
-    const appBar =
-      this.isContentReady() != null
-        ? this.buildAppbar()
-        : this.buildLoadingAppbar();
+    const content = this.isContentReady()
+      ? this.buildContent()
+      : this.buildLoadingContent();
+    const appBar = this.isContentReady()
+      ? this.buildAppbar()
+      : this.buildLoadingAppbar();
 
     return (
       <>

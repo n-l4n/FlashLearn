@@ -3,6 +3,7 @@ import {Appbar, FAB} from 'react-native-paper';
 import {globalStyles} from '../../../../GlobalStyles';
 import React from 'react';
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
+import BoxList from '../component/BoxList';
 
 export class DeckScreen extends BaseDeckScreen {
   buildAppbar() {
@@ -25,6 +26,7 @@ export class DeckScreen extends BaseDeckScreen {
   buildContent() {
     return (
       <>
+        <BoxList deck={this.state.deck} />
         <FAB
           style={globalStyles.fab}
           icon="plus"
