@@ -5,7 +5,7 @@ import {
   IconButton,
   TextInput,
 } from 'react-native-paper';
-import React, {useState} from 'react';
+import React from 'react';
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
 import {authStyles} from '../../../auth/AuthStyles';
 import {StyleSheet, View} from 'react-native';
@@ -35,78 +35,82 @@ const styles = StyleSheet.create({
   },
 });
 
-function shareDeck(baseState, userMail) {
-  DeckCrudHelper.useShareDeck(baseState.deck, userMail, success => {
-    if (!success) {
-      return;
-    }
-    baseState.deck.shares.push(userMail);
-  });
-}
+export class DeckShareScreen extends BaseDeckScreen {
+  buildCustomState(): {} {
+    return {
+      userMail: '',
+    };
+  }
 
-function unshareDeck(baseState, userMail) {
-  DeckCrudHelper.useUnshareDeck(baseState.deck, userMail, success => {
-    if (!success) {
-      return;
-    }
-    let index = baseState.deck.shares.indexOf(userMail);
-    baseState.deck.shares.splice(index, 1);
-  });
-}
+  buildAppbar() {
+    return (
+      <Appbar.Header style={authStyles.appBar}>
+        <Appbar.BackAction onPress={() => this.navigation.goBack()} />
+        <Appbar.Content title={this.state.deck.name + ' teilen'} />
+      </Appbar.Header>
+    );
+  }
 
-function DeckShareScreenImpl(baseState, navigation, userMail, setUserMail) {
-  return (
-    <>
-      <Caption style={styles.hintText}>TEILEN MIT</Caption>
-      <View style={styles.textInputContainer}>
-        <TextInput
-          left={<TextInput.Icon color={appColors.textIconColor} name="email" />}
-          label="Email"
-          value={userMail}
-          onChangeText={text => setUserMail(text)}
-          style={styles.textInput}
-        />
-        <IconButton
-          icon="send"
-          color={appColors.accent}
-          size={28}
-          onPress={() => {
-            shareDeck(baseState, userMail);
+  buildContent() {
+    return (
+      <>
+        <Caption style={styles.hintText}>TEILEN MIT</Caption>
+        <View style={styles.textInputContainer}>
+          <TextInput
+            left={
+              <TextInput.Icon color={appColors.textIconColor} name="email" />
+            }
+            label="Email"
+            value={this.state.userMail}
+            onChangeText={text =>
+              this.setState({
+                userMail: text,
+              })
+            }
+            style={styles.textInput}
+          />
+          <IconButton
+            icon="send"
+            color={appColors.accent}
+            size={28}
+            onPress={() => {
+              this.shareDeck();
+            }}
+          />
+        </View>
+        <Divider style={styles.divider} />
+        <Caption style={styles.hintText}>GETEILT MIT</Caption>
+        <DeckShareList
+          shares={this.state.deck.shares}
+          onDelete={share => {
+            this.unshareDeck(share);
           }}
         />
-      </View>
-      <Divider style={styles.divider} />
-      <Caption style={styles.hintText}>GETEILT MIT</Caption>
-      <DeckShareList
-        shares={baseState.deck.shares}
-        onDelete={share => {
-          unshareDeck(baseState, share);
-        }}
-      />
-    </>
-  );
-}
+      </>
+    );
+  }
 
-function DeckShareScreenAppbarImpl(baseState, navigation) {
-  return (
-    <Appbar.Header style={authStyles.appBar}>
-      <Appbar.BackAction onPress={() => navigation.goBack()} />
-      <Appbar.Content title={baseState.deck.name + ' teilen'} />
-    </Appbar.Header>
-  );
-}
+  shareDeck() {
+    DeckCrudHelper.useShareDeck(
+      this.state.deck,
+      this.state.userMail,
+      success => {
+        if (!success) {
+          return;
+        }
+        this.setState({
+          userMail: '',
+        });
+      },
+    );
+  }
 
-export function DeckShareScreen({route, navigation}) {
-  const [userMail, setUserMail] = useState('');
-
-  return BaseDeckScreen(
-    route,
-    navigation,
-    baseState => {
-      return DeckShareScreenImpl(baseState, navigation, userMail, setUserMail);
-    },
-    baseState => {
-      return DeckShareScreenAppbarImpl(baseState, navigation);
-    },
-  );
+  unshareDeck(userMail) {
+    DeckCrudHelper.useUnshareDeck(this.state.deck, userMail, success => {
+      if (!success) {
+        return;
+      }
+      this.setState();
+    });
+  }
 }

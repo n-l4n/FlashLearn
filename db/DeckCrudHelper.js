@@ -29,6 +29,23 @@ export class DeckCrudHelper {
       });
   }
 
+  static useAddCardToDeck(deck, card, onResult) {
+    deck.cards.push(card);
+
+    this.useUpdateDeck(deck, onResult);
+  }
+
+  static useUpdateCardInDeck(deck, card, onResult) {
+    const index = deck.cards.findIndex(foundCard => foundCard.id === card.id);
+    if (index === -1) {
+      onResult(false);
+      return;
+    }
+    deck.cards[index] = card;
+
+    this.useUpdateDeck(deck, onResult);
+  }
+
   static useShareDeck(deck, newShareMail, onResult) {
     if (deck.shares.includes(newShareMail)) {
       onResult(false);

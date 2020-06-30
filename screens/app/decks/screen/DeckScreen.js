@@ -4,49 +4,38 @@ import {globalStyles} from '../../../../GlobalStyles';
 import React from 'react';
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
 
-function DeckScreenImpl(baseState, navigation) {
-  return (
-    <>
-      <FAB
-        style={globalStyles.fab}
-        icon="plus"
-        onPress={() => {
-          navigation.navigate('NewDeckCard', {
-            deckId: baseState.deck.id,
-            cardId: 'new',
-          });
-        }}
-      />
-    </>
-  );
-}
+export class DeckScreen extends BaseDeckScreen {
+  buildAppbar() {
+    return (
+      <Appbar.Header style={authStyles.appBar}>
+        <Appbar.BackAction onPress={() => this.navigation.goBack()} />
+        <Appbar.Content title={this.state.deck.name} />
+        <Appbar.Action
+          icon="share"
+          onPress={() => {
+            this.navigation.navigate('ShareDeck', {
+              deckId: this.state.deck.id,
+            });
+          }}
+        />
+      </Appbar.Header>
+    );
+  }
 
-function DeckScreenAppbarImpl(baseState, navigation) {
-  return (
-    <Appbar.Header style={authStyles.appBar}>
-      <Appbar.BackAction onPress={() => navigation.goBack()} />
-      <Appbar.Content title={baseState.deck.name} />
-      <Appbar.Action
-        icon="share"
-        onPress={() => {
-          navigation.navigate('ShareDeck', {
-            deckId: baseState.deck.id,
-          });
-        }}
-      />
-    </Appbar.Header>
-  );
-}
-
-export function DeckScreen({route, navigation}) {
-  return BaseDeckScreen(
-    route,
-    navigation,
-    baseState => {
-      return DeckScreenImpl(baseState, navigation);
-    },
-    baseState => {
-      return DeckScreenAppbarImpl(baseState, navigation);
-    },
-  );
+  buildContent() {
+    return (
+      <>
+        <FAB
+          style={globalStyles.fab}
+          icon="plus"
+          onPress={() => {
+            this.navigation.navigate('NewDeckCard', {
+              deckId: this.state.deck.id,
+              cardId: 'new',
+            });
+          }}
+        />
+      </>
+    );
+  }
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {IconButton, List, TextInput} from 'react-native-paper';
+import {Checkbox, IconButton, List, TextInput} from 'react-native-paper';
 import {appColors} from '../../../../theme';
 import {MultipleChoiceItem} from '../../../../db/DeckCard';
 
@@ -20,12 +20,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class DeckAnswerList extends Component {
+export default class DeckMultipleChoiceList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       items: this.buildItemsFromProps(),
       text: '',
+      isCorrect: false,
     };
   }
 
@@ -55,8 +56,11 @@ export default class DeckAnswerList extends Component {
       if (item !== 'edit-item') {
         return (
           <List.Item
-            key={item}
-            title={item}
+            key={item.text}
+            title={item.text}
+            description={
+              item.isCorrect ? 'Korrekte Antwort' : 'Falsche Antwort'
+            }
             style={styles.listItem}
             right={props => {
               return (
@@ -84,14 +88,26 @@ export default class DeckAnswerList extends Component {
               style={styles.textInput}
               label="Neue Antwort"
             />
+            <Checkbox
+              status={this.state.isCorrect ? 'checked' : 'unchecked'}
+              onPress={() => {
+                this.setState({
+                  isCorrect: !this.state.isCorrect,
+                });
+              }}
+            />
             <IconButton
               icon="plus"
               color={appColors.textIconColor}
               size={24}
               onPress={() => {
-                this.props.onNewItem(this.state.text);
+                const publishItem = new MultipleChoiceItem();
+                publishItem.text = this.state.text;
+                publishItem.isCorrect = this.state.isCorrect;
+                this.props.onNewItem(publishItem);
                 this.setState({
                   text: '',
+                  isCorrect: false,
                 });
               }}
             />

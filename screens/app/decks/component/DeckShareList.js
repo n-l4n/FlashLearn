@@ -20,6 +20,7 @@ export default class DeckShareList extends Component {
     return (
       <FlatList
         data={this.props.shares}
+        keyExtractor={item => item}
         renderItem={listItem => {
           return (
             <List.Item

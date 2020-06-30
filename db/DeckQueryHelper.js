@@ -42,7 +42,37 @@ export class DeckQueryHelper {
     return decks;
   }
 
+  static findDeckById(id, onResult, onError) {
+    firestore()
+      .collection('decks')
+      .doc(id)
+      .onSnapshot(snapshot => {
+        if (snapshot && snapshot._data) {
+          let json = snapshot._data;
+          json.id = snapshot.id;
+          onResult(Deck.fromJSON(json));
+        } else {
+          onResult(null);
+        }
+      }, onError);
+  }
+
   static useDeckById(id, onResult, onError) {
+    firestore()
+      .collection('decks')
+      .doc(id)
+      .onSnapshot(snapshot => {
+        if (snapshot && snapshot._data) {
+          let json = snapshot._data;
+          json.id = snapshot.id;
+          onResult(Deck.fromJSON(json));
+        } else {
+          onResult(null);
+        }
+      }, onError);
+  }
+
+  static useDeckCardById(id, onResult, onError) {
     firestore()
       .collection('decks')
       .doc(id)
