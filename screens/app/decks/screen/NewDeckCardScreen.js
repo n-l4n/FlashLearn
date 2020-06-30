@@ -17,7 +17,7 @@ import {
   TextInput,
 } from 'react-native-paper';
 import {globalStyles} from '../../../../GlobalStyles';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createRef} from 'react';
 import {useDeckCardBaseState} from '../../../../BaseState';
 import {appColors} from '../../../../theme';
 import {useLoadDeck} from '../../../../db/DeckLoadHelper';
@@ -26,6 +26,8 @@ import Camera from '../component/Camera';
 import storage from '@react-native-firebase/storage';
 import TrackPlayer from 'react-native-track-player';
 import SoundRecorder from 'react-native-sound-recorder';
+import AudioRecorder from '../component/AudioRecorder';
+import FileUploadHelper from '../../../../db/FileUploadHelper';
 
 const styles = StyleSheet.create({
   textInput: {
@@ -55,10 +57,19 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
   },
+  hidden: {
+    opacity: 0,
+    height: 0,
+  },
 });
 
 function NewDeckCardScreenImpl(baseState, baseCardState, navigation) {
   console.log(baseCardState.card);
+  console.log(
+    'picture' in baseCardState.card && baseCardState.card.picture !== null,
+  );
+  let ref = createRef();
+
   return (
     <>
       <ScrollView>
@@ -106,7 +117,7 @@ function NewDeckCardScreenImpl(baseState, baseCardState, navigation) {
             }
             small
             icon="microphone"
-            onPress={() => startRecording(baseCardState)}
+            onPress={() => ref.startRecording(baseCardState)}
           />
           <FAB
             visible={!baseCardState.isTakingPicture}
@@ -121,19 +132,23 @@ function NewDeckCardScreenImpl(baseState, baseCardState, navigation) {
             onPress={() => console.log('Pressed')}
           />
         </View>
-        {baseCardState.isRecordingAudio && (
-          <View style={styles.subSection}>
-            <Divider />
-            <Caption style={styles.subSectionHint}>AUFNAHME STEUERN</Caption>
-            <IconButton
-              icon="stop"
-              size={32}
-              onPress={() => {
-                stopRecording(baseState, baseCardState);
-              }}
-            />
-          </View>
-        )}
+        <View
+          style={[
+            styles.subSection,
+            !baseCardState.isRecordingAudio ? styles.hidden : null,
+          ]}>
+          <Divider />
+          <Caption style={styles.subSectionHint}>AUFNAHME STEUERN</Caption>
+          <AudioRecorder
+            ref={recorder => {
+              ref = recorder;
+            }}
+            onStartRecording={() => onRecordingStart(baseCardState)}
+            onStopRecording={path =>
+              onRecordingStop(path, baseState, baseCardState)
+            }
+          />
+        </View>
         {'picture' in baseCardState.card &&
           baseCardState.card.picture !== null && (
             <View style={styles.subSection}>
@@ -160,6 +175,7 @@ function NewDeckCardScreenImpl(baseState, baseCardState, navigation) {
                 onPress={() => {
                   startPlayback(baseCardState);
                 }}
+                style={styles.subSectionContent}
               />
             </View>
           )}
@@ -184,15 +200,39 @@ function NewDeckCardScreenImpl(baseState, baseCardState, navigation) {
 async function onPictureTaken(baseState, baseCardState, uri) {
   baseCardState.setIsTakingPicture(false);
   baseCardState.setIsUploadingPicture(true);
-  const fileRef = storage().ref(
+  await FileUploadHelper.uploadFile(
+    uri,
     'deck_data/' + baseState.deck.id + '/' + baseCardState.card.id + '.jpg',
+    url => {
+      if (url === null) {
+        return;
+      }
+      baseCardState.setIsUploadingPicture(false);
+      baseCardState.card.picture = url;
+      baseCardState.setCard(baseCardState.card);
+    },
   );
-  const task = fileRef.putFile(uri);
-  await task.then(async () => {
-    baseCardState.setIsUploadingPicture(false);
-    baseCardState.card.picture = await fileRef.getDownloadURL();
-    baseCardState.setCard(baseCardState.card);
-  });
+}
+
+function onRecordingStart(baseCardState) {
+  baseCardState.setIsRecordingAudio(true);
+}
+
+async function onRecordingStop(path, baseState, baseCardState) {
+  baseCardState.setIsRecordingAudio(false);
+  baseCardState.setIsUploadingAudio(true);
+  await FileUploadHelper.uploadFile(
+    path,
+    'deck_data/' + baseState.deck.id + '/' + baseCardState.card.id + '.mp3',
+    url => {
+      if (url === null) {
+        return;
+      }
+      baseCardState.setIsUploadingAudio(false);
+      baseCardState.card.recording = url;
+      baseCardState.setCard(baseCardState.card);
+    },
+  );
 }
 
 async function startPlayback(baseCardState) {
@@ -205,53 +245,6 @@ async function startPlayback(baseCardState) {
   });
 
   await TrackPlayer.play();
-}
-
-async function startRecording(baseCardState) {
-  const granted = PermissionsAndroid.check(
-    PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
-  );
-  if (granted) {
-    startRecordingImpl(baseCardState);
-  }
-  const grantRequestResult = await PermissionsAndroid.request(
-    PermissionsAndroid.PERMISSIONS.CAMERA,
-    {
-      title: 'Mikrofon Berechtigung',
-      message:
-        'Die Mikrofon Berechtigung wird benötigt um eine Aufnahme zu machen.',
-      buttonNeutral: 'Später',
-      buttonNegative: 'Abbrechen',
-      buttonPositive: 'OK',
-    },
-  );
-
-  if (grantRequestResult === PermissionsAndroid.RESULTS.GRANTED) {
-    startRecordingImpl(baseCardState);
-  }
-}
-
-function startRecordingImpl(baseCardState) {
-  baseCardState.setIsRecordingAudio(true);
-  SoundRecorder.start(SoundRecorder.PATH_CACHE + '/curr_recording.mp3').then(
-    () => console.log('started recording'),
-  );
-}
-
-function stopRecording(baseState, baseCardState) {
-  baseCardState.setIsRecordingAudio(false);
-  baseCardState.setIsUploadingAudio(true);
-  SoundRecorder.stop().then(async result => {
-    const fileRef = storage().ref(
-      'deck_data/' + baseState.deck.id + '/' + baseCardState.card.id + '.mp3',
-    );
-    const task = fileRef.putFile(result.path);
-    await task.then(async () => {
-      baseCardState.setIsUploadingAudio(false);
-      baseCardState.card.recording = await fileRef.getDownloadURL();
-      baseCardState.setCard(baseCardState.card);
-    });
-  });
 }
 
 function NewDeckCardScreenAppbarImpl(baseState, navigation) {
