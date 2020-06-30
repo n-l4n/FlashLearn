@@ -1,9 +1,11 @@
 import {authStyles} from '../../../auth/AuthStyles';
-import {Appbar, FAB} from 'react-native-paper';
+import {Appbar, Button, FAB} from 'react-native-paper';
 import {globalStyles} from '../../../../GlobalStyles';
 import React from 'react';
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
 import BoxList from '../component/BoxList';
+import {appColors} from '../../../../theme';
+import {View, StyleSheet} from 'react-native';
 
 export class DeckScreen extends BaseDeckScreen {
   buildAppbar() {
@@ -26,7 +28,10 @@ export class DeckScreen extends BaseDeckScreen {
   buildContent() {
     return (
       <>
-        <BoxList deck={this.state.deck} />
+        <BoxList deck={this.state.deck} onBoxPress={box => {}} />
+        <Button mode="text" color={appColors.accent} onPress={() => {}}>
+          Alle Karten anzeigen
+        </Button>
         <FAB
           style={globalStyles.fab}
           icon="plus"
