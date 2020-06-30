@@ -21,20 +21,28 @@ export class BaseDeckCardState {
   card;
   picture;
   recording;
+  listItems;
+  multipleChoiceItems;
   isTakingPicture;
   isUploadingPicture;
   isRecordingAudio;
   isUploadingAudio;
+  isAddingListItems;
+  isAddingMultipleChoiceItems;
 
   setQuestion: () => {};
   setAnswer: () => {};
   setCard: () => {};
   setPicture: () => {};
   setRecording: () => {};
+  setListItems: () => {};
+  setMultipleChoiceItems: () => {};
   setIsTakingPicture: () => {};
   setIsUploadingPicture: () => {};
   setIsRecordingAudio: () => {};
   setIsUploadingAudio: () => {};
+  setIsAddingListItems: () => {};
+  setIsAddingMultipleChoiceItems: () => {};
 }
 
 function useBaseStateImpl(baseState: BaseState) {
@@ -60,11 +68,22 @@ export function useDeckCardBaseState(): BaseDeckCardState {
   [baseState.card, baseState.setCard] = useState(new DeckCard());
   [baseState.picture, baseState.setPicture] = useState(null);
   [baseState.recording, baseState.setRecording] = useState(null);
+  [baseState.listItems, baseState.setListItems] = useState([]);
+  [baseState.multipleChoiceItems, baseState.setMultipleChoiceItems] = useState(
+    [],
+  );
   [baseState.isTakingPicture, baseState.setIsTakingPicture] = useState(false);
   [baseState.isUploadingPicture, baseState.setIsUploadingPicture] = useState(
     false,
   );
   [baseState.isRecordingAudio, baseState.setIsRecordingAudio] = useState(false);
   [baseState.isUploadingAudio, baseState.setIsUploadingAudio] = useState(false);
+  [baseState.isAddingListItems, baseState.setIsAddingListItems] = useState(
+    false,
+  );
+  [
+    baseState.isAddingMultipleChoiceItems,
+    baseState.setIsAddingMultipleChoiceItems,
+  ] = useState(false);
   return baseState;
 }

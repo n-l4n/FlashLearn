@@ -10,6 +10,16 @@ export class DeckCard {
   list: string[];
   multipleChoiceItems: MultipleChoiceItem[];
 
+  constructor() {
+    this.box = 0;
+    this.question = '';
+    this.answer = '';
+    this.picture = null;
+    this.recording = null;
+    this.list = null;
+    this.multipleChoiceItems = null;
+  }
+
   static fromJSON(json: any): DeckCard {
     const card = new DeckCard();
 

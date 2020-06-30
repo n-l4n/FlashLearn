@@ -18,6 +18,7 @@ import Camera from '../component/Camera';
 import TrackPlayer from 'react-native-track-player';
 import AudioRecorder from '../component/AudioRecorder';
 import FileUploadHelper from '../../../../db/FileUploadHelper';
+import DeckAnswerList from '../component/DeckAnswerList';
 
 const styles = StyleSheet.create({
   textInput: {
@@ -111,8 +112,10 @@ function NewDeckCardScreenImpl(baseState, baseCardState, navigation) {
             visible={!baseCardState.isTakingPicture}
             small
             icon="format-list-bulleted-square"
-            disabled={isHandlingMedia(baseCardState)}
-            onPress={() => console.log('Pressed')}
+            disabled={
+              isHandlingMedia(baseCardState) || baseCardState.isAddingListItems
+            }
+            onPress={() => baseCardState.setIsAddingListItems(true)}
           />
           <FAB
             visible={!baseCardState.isTakingPicture}
@@ -139,6 +142,25 @@ function NewDeckCardScreenImpl(baseState, baseCardState, navigation) {
             }
           />
         </View>
+        {baseCardState.isAddingListItems && (
+          <View style={styles.subSection}>
+            <Divider />
+            <Caption style={styles.subSectionHint}>ANTWORTEN</Caption>
+            <DeckAnswerList
+              isEditing={true}
+              items={baseCardState.listItems}
+              onNewItem={item => {
+                baseCardState.setListItems([...baseCardState.listItems, item]);
+              }}
+              onDelete={item => {
+                let items = baseCardState.listItems.slice();
+                items = items.filter(foundItem => item !== foundItem);
+                baseCardState.setListItems(items);
+              }}
+              style={styles.subSectionContent}
+            />
+          </View>
+        )}
         {baseCardState.picture && (
           <View style={styles.subSection}>
             <Divider />
