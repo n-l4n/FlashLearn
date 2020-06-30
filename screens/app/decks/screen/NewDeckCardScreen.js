@@ -121,12 +121,14 @@ function NewDeckCardScreenImpl(baseState, baseCardState, navigation) {
             visible={!baseCardState.isTakingPicture}
             small
             icon="format-list-bulleted-square"
+            disabled={isHandlingMedia(baseCardState)}
             onPress={() => console.log('Pressed')}
           />
           <FAB
             visible={!baseCardState.isTakingPicture}
             small
             icon="format-list-checks"
+            disabled={isHandlingMedia(baseCardState)}
             onPress={() => console.log('Pressed')}
           />
         </View>
@@ -187,6 +189,7 @@ function NewDeckCardScreenImpl(baseState, baseCardState, navigation) {
         style={globalStyles.fab}
         visible={!baseCardState.isTakingPicture}
         icon="check"
+        disabled={isHandlingMedia(baseCardState)}
         onPress={() => {}}
       />
     </>

@@ -16,15 +16,15 @@ export function AppNavigationContainer() {
         initialRouteName="Decks"
         headerMode="none"
         shifting={true}
-        sceneAnimationEnabled={false}>
+        sceneAnimationEnabled={false}
+        activeColor="#000000"
+        inactiveColor="rgba(0, 0, 0, .6)">
         <Tab.Screen
           name="Decks"
           component={HomeNavigationContainer}
           options={{
             tabBarIcon: 'folder-multiple',
             tabBarColor: appColors.primary,
-            activeColor: '#000000',
-            inactiveColor: 'rgba(0, 0, 0, .6)',
           }}
         />
         <Tab.Screen
@@ -33,8 +33,6 @@ export function AppNavigationContainer() {
           options={{
             tabBarIcon: 'bell',
             tabBarColor: appColors.primary,
-            activeColor: '#000000',
-            inactiveColor: 'rgba(0, 0, 0, .6)',
           }}
         />
         <Tab.Screen
@@ -43,8 +41,6 @@ export function AppNavigationContainer() {
           options={{
             tabBarIcon: 'settings',
             tabBarColor: appColors.primary,
-            activeColor: '#000000',
-            inactiveColor: 'rgba(0, 0, 0, .6)',
           }}
         />
       </Tab.Navigator>
