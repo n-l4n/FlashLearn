@@ -8,7 +8,8 @@ import {useLoadDeck} from '../../../../db/DeckLoadHelper';
 import {DeckQueryHelper} from '../../../../db/DeckQueryHelper';
 import {Deck} from '../../../../db/Deck';
 import BaseStatefulScreen from './BaseStatefulScreen';
-export class BaseDeckScreen extends BaseStatefulScreen {
+import BaseContentLoadScreen from './BaseContentLoadScreen';
+export class BaseDeckScreen extends BaseContentLoadScreen {
   constructor(props) {
     super(props);
     this.state = this.buildBaseState();
@@ -30,7 +31,8 @@ export class BaseDeckScreen extends BaseStatefulScreen {
     if (deckId === 'new') {
       const deck = new Deck();
       this.onDeckLoaded(deck);
-      this.setState({deck: deck});
+      this.state.deck = deck;
+      this.setIsContentReady(true);
       return;
     }
     DeckQueryHelper.findDeckById(
@@ -40,32 +42,12 @@ export class BaseDeckScreen extends BaseStatefulScreen {
           return;
         }
         this.onDeckLoaded(deck);
-        this.setState({
-          deck: deck,
-        });
+        this.state.deck = deck;
+        this.setIsContentReady(true);
       },
       error => {
         console.log(error);
       },
-    );
-  }
-
-  render() {
-    const content =
-      this.state.deck != null
-        ? this.buildContent()
-        : this.buildLoadingContent();
-    const appBar =
-      this.state.deck != null ? this.buildAppbar() : this.buildLoadingAppbar();
-
-    return (
-      <>
-        <StatusBar barStyle="dark-content" />
-        <SafeAreaView style={authStyles.contentNoCenter}>
-          {appBar}
-          {content}
-        </SafeAreaView>
-      </>
     );
   }
 
@@ -75,27 +57,7 @@ export class BaseDeckScreen extends BaseStatefulScreen {
 
   onDeckLoaded(deck) {}
 
-  buildAppbar() {}
-
-  buildContent() {}
-
-  buildLoadingAppbar() {
-    return (
-      <Appbar.Header style={authStyles.appBar}>
-        <Appbar.Content title="Deck laden..." />
-      </Appbar.Header>
-    );
-  }
-
-  buildLoadingContent() {
-    return (
-      <View style={authStyles.contentContainer}>
-        <ActivityIndicator color={appColors.accent} />
-      </View>
-    );
-  }
-
-  getNavigationParam(id: string) {
-    return this.route.params[id];
+  getLoadingText(): string {
+    return 'Deck laden...';
   }
 }

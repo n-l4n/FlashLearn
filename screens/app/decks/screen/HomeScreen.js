@@ -6,44 +6,47 @@ import {globalStyles} from '../../../../GlobalStyles';
 import auth from '@react-native-firebase/auth';
 import {DeckQueryHelper} from '../../../../db/DeckQueryHelper';
 import DeckList from '../component/DeckList';
+import BaseStatefulScreen from '../base/BaseStatefulScreen';
+import BaseContentLoadScreen from '../base/BaseContentLoadScreen';
 
-function logout() {
-  auth().signOut();
-}
+export class HomeScreen extends BaseContentLoadScreen {
+  constructor(props) {
+    super(props);
+    this.state = this.buildBaseState();
+  }
 
-function loadDecks(setDecks) {
-  DeckQueryHelper.findDecks(
-    decks => {
-      setDecks(decks);
-    },
-    error => {},
-  );
-}
+  componentDidMount(): void {
+    this.loadDecks();
+  }
 
-export function HomeScreen({navigation}) {
-  const [decks, setDecks] = useState([]);
+  buildBaseState() {
+    return {
+      ...super.buildBaseState(),
+      decks: [],
+    };
+  }
 
-  useEffect(() => {
-    loadDecks(setDecks);
-  }, []);
+  buildAppbar() {
+    return (
+      <Appbar.Header style={authStyles.appBar}>
+        <Appbar.Content title="Home" />
+        <Appbar.Action icon="logout" onPress={() => this.logout()} />
+      </Appbar.Header>
+    );
+  }
 
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={authStyles.content}>
-        <Appbar.Header style={authStyles.appBar}>
-          <Appbar.Content title="Home" />
-          <Appbar.Action icon="logout" onPress={() => logout()} />
-        </Appbar.Header>
+  buildContent() {
+    return (
+      <>
         <DeckList
-          decks={decks}
+          decks={this.state.decks}
           onDeckPress={deck =>
-            navigation.navigate('Deck', {
+            this.navigation.navigate('Deck', {
               deckId: deck.id,
             })
           }
           onEdit={deck =>
-            navigation.navigate('NewDeck', {
+            this.navigation.navigate('NewDeck', {
               deckId: deck.id,
             })
           }
@@ -52,12 +55,33 @@ export function HomeScreen({navigation}) {
           style={globalStyles.fab}
           icon="plus"
           onPress={() =>
-            navigation.navigate('NewDeck', {
+            this.navigation.navigate('NewDeck', {
               deckId: 'new',
             })
           }
         />
-      </SafeAreaView>
-    </>
-  );
+      </>
+    );
+  }
+
+  loadDecks() {
+    DeckQueryHelper.findDecks(
+      decks => {
+        this.state.decks = decks;
+        this.setIsContentReady(true);
+      },
+      error => {
+        this.setError('firebase-err');
+        this.setIsContentReady(true);
+      },
+    );
+  }
+
+  logout() {
+    auth().signOut();
+  }
+
+  getLoadingText(): string {
+    return 'Decks laden...';
+  }
 }

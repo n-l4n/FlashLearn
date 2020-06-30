@@ -32,4 +32,8 @@ export default class BaseStatefulScreen extends React.Component {
   isLoading(): boolean {
     return this.state.loading;
   }
+
+  getNavigationParam(id: string) {
+    return this.route.params[id];
+  }
 }
