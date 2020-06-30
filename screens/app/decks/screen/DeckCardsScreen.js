@@ -3,6 +3,7 @@ import {Appbar, Text} from 'react-native-paper';
 import {authStyles} from '../../../auth/AuthStyles';
 import React from 'react';
 import DeckCardList from '../component/DeckCardList';
+import EmptyState from '../component/EmptyState';
 
 export class DeckCardsScreen extends BaseDeckScreen {
   buildCustomState() {
@@ -14,7 +15,6 @@ export class DeckCardsScreen extends BaseDeckScreen {
 
   onDeckLoaded(deck) {
     this.state.box = this.getNavigationParam('box');
-    console.log(this.state.box);
     if (this.state.box === -1) {
       this.state.cards = deck.cards;
     } else {
@@ -41,15 +41,19 @@ export class DeckCardsScreen extends BaseDeckScreen {
   buildContent() {
     return (
       <>
-        <DeckCardList
-          cards={this.state.cards}
-          onCardPress={card => {
-            this.navigation.navigate('NewDeckCard', {
-              deckId: this.state.deck.id,
-              cardId: card.id,
-            });
-          }}
-        />
+        {this.state.cards.length > 0 ? (
+          <DeckCardList
+            cards={this.state.cards}
+            onCardPress={card => {
+              this.navigation.navigate('NewDeckCard', {
+                deckId: this.state.deck.id,
+                cardId: card.id,
+              });
+            }}
+          />
+        ) : (
+          <EmptyState text={'Alle Karten erledigt'} icon={'check-all'} />
+        )}
       </>
     );
   }

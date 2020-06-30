@@ -8,6 +8,8 @@ import {DeckQueryHelper} from '../../../../db/DeckQueryHelper';
 import DeckList from '../component/DeckList';
 import BaseStatefulScreen from '../base/BaseStatefulScreen';
 import BaseContentLoadScreen from '../base/BaseContentLoadScreen';
+import DeckCardList from '../component/DeckCardList';
+import EmptyState from '../component/EmptyState';
 
 export class HomeScreen extends BaseContentLoadScreen {
   constructor(props) {
@@ -38,19 +40,28 @@ export class HomeScreen extends BaseContentLoadScreen {
   buildContent() {
     return (
       <>
-        <DeckList
-          decks={this.state.decks}
-          onDeckPress={deck =>
-            this.navigation.navigate('Deck', {
-              deckId: deck.id,
-            })
-          }
-          onEdit={deck =>
-            this.navigation.navigate('NewDeck', {
-              deckId: deck.id,
-            })
-          }
-        />
+        {this.state.decks.length > 0 ? (
+          <DeckList
+            decks={this.state.decks}
+            onDeckPress={deck =>
+              this.navigation.navigate('Deck', {
+                deckId: deck.id,
+              })
+            }
+            onEdit={deck =>
+              this.navigation.navigate('NewDeck', {
+                deckId: deck.id,
+              })
+            }
+          />
+        ) : (
+          <EmptyState
+            text={
+              'Es wurde noch kein Deck erstellt. Tippe auf den Button rechts unten um eins hinzuzufügen.'
+            }
+            icon={'folder-multiple'}
+          />
+        )}
         <FAB
           style={globalStyles.fab}
           icon="plus"
