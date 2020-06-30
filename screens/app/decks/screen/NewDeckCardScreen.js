@@ -96,7 +96,7 @@ export class NewDeckCardScreen extends BaseDeckScreen {
         <Appbar.BackAction onPress={() => this.navigation.goBack()} />
         <Appbar.Content title="Neue Karte" />
         {this.getNavigationParam('cardId') !== 'new' && (
-          <Appbar.Action icon={'delete'} onPress={() => {}} />
+          <Appbar.Action icon={'delete'} onPress={() => this.deleteCard()} />
         )}
       </Appbar.Header>
     );
@@ -352,6 +352,14 @@ export class NewDeckCardScreen extends BaseDeckScreen {
       this.state.isUploadingAudio ||
       this.state.isRecordingAudio
     );
+  }
+
+  deleteCard() {
+    const deck = this.state.deck;
+    const card = this.state.card;
+    DeckCrudHelper.deleteCardInDeck(deck, card, success => {
+      this.navigation.goBack();
+    });
   }
 
   save() {

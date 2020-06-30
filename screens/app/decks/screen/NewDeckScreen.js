@@ -25,7 +25,7 @@ export class NewDeckScreen extends BaseDeckScreen {
         <Appbar.BackAction onPress={() => this.navigation.goBack()} />
         <Appbar.Content title="Neues Deck" />
         {this.getNavigationParam('deckId') !== 'new' && (
-          <Appbar.Action icon={'delete'} onPress={() => {}} />
+          <Appbar.Action icon={'delete'} onPress={() => this.deleteDeck()} />
         )}
       </Appbar.Header>
     );
@@ -83,6 +83,12 @@ export class NewDeckScreen extends BaseDeckScreen {
       this.onDeckChangeResult(success),
     );
   }
+    deleteDeck() {
+        DeckCrudHelper.deleteDeck(this.state.deck, success =>
+            this.onDeckChangeResult(success),
+        );
+    }
+
 
   onDeckChangeResult(success: boolean) {
     this.setIsLoading(false);
