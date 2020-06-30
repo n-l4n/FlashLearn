@@ -1,7 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 
 export class DeckCrudHelper {
-  static useCreateDeck(deck, onResult) {
+  static createDeck(deck, onResult) {
     firestore()
       .collection('decks')
       .add(deck)
@@ -13,7 +13,7 @@ export class DeckCrudHelper {
       });
   }
 
-  static useUpdateDeck(deck, onResult) {
+  static updateDeck(deck, onResult) {
     const id = '' + deck.id;
     delete deck.id;
 
@@ -29,13 +29,13 @@ export class DeckCrudHelper {
       });
   }
 
-  static useAddCardToDeck(deck, card, onResult) {
+  static addCardToDeck(deck, card, onResult) {
     deck.cards.push(card);
 
     this.useUpdateDeck(deck, onResult);
   }
 
-  static useUpdateCardInDeck(deck, card, onResult) {
+  static updateCardInDeck(deck, card, onResult) {
     const index = deck.cards.findIndex(foundCard => foundCard.id === card.id);
     if (index === -1) {
       onResult(false);
@@ -46,7 +46,7 @@ export class DeckCrudHelper {
     this.useUpdateDeck(deck, onResult);
   }
 
-  static useShareDeck(deck, newShareMail, onResult) {
+  static shareDeck(deck, newShareMail, onResult) {
     if (deck.shares.includes(newShareMail)) {
       onResult(false);
       return;
@@ -57,7 +57,7 @@ export class DeckCrudHelper {
     this.useUpdateDeck(deck, onResult);
   }
 
-  static useUnshareDeck(deck, shareMail, onResult) {
+  static unshareDeck(deck, shareMail, onResult) {
     if (!deck.shares.includes(shareMail)) {
       onResult(false);
       return;

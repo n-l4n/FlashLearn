@@ -360,11 +360,11 @@ export class NewDeckCardScreen extends BaseDeckScreen {
     card.multipleChoiceItems = this.state.multipleChoiceItems;
 
     if (cardId === 'new') {
-      DeckCrudHelper.useAddCardToDeck(deck, card, success => {
+      DeckCrudHelper.addCardToDeck(deck, card, success => {
         this.navigation.goBack();
       });
     } else {
-      DeckCrudHelper.useUpdateCardInDeck(deck, card, success => {
+      DeckCrudHelper.updateCardInDeck(deck, card, success => {
         this.navigation.goBack();
       });
     }

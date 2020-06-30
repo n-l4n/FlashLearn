@@ -91,22 +91,18 @@ export class DeckShareScreen extends BaseDeckScreen {
   }
 
   shareDeck() {
-    DeckCrudHelper.useShareDeck(
-      this.state.deck,
-      this.state.userMail,
-      success => {
-        if (!success) {
-          return;
-        }
-        this.setState({
-          userMail: '',
-        });
-      },
-    );
+    DeckCrudHelper.shareDeck(this.state.deck, this.state.userMail, success => {
+      if (!success) {
+        return;
+      }
+      this.setState({
+        userMail: '',
+      });
+    });
   }
 
   unshareDeck(userMail) {
-    DeckCrudHelper.useUnshareDeck(this.state.deck, userMail, success => {
+    DeckCrudHelper.unshareDeck(this.state.deck, userMail, success => {
       if (!success) {
         return;
       }

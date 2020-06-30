@@ -6,25 +6,31 @@ import React from 'react';
 import {useDeckBaseState} from '../../../../BaseState';
 import {useLoadDeck} from '../../../../db/DeckLoadHelper';
 import {DeckQueryHelper} from '../../../../db/DeckQueryHelper';
-export class BaseDeckScreen extends React.Component {
-  route;
-  navigation;
-
+import {Deck} from '../../../../db/Deck';
+import BaseStatefulScreen from './BaseStatefulScreen';
+export class BaseDeckScreen extends BaseStatefulScreen {
   constructor(props) {
     super(props);
-    this.route = this.props.route;
-    this.navigation = this.props.navigation;
-    this.state = {
+    this.state = this.buildBaseState();
+  }
+
+  buildBaseState() {
+    return {
+      ...super.buildBaseState(),
       ...this.buildCustomState(),
       deck: null,
-      loading: false,
-      error: null,
     };
   }
 
   componentDidMount(): void {
     const deckId = this.getNavigationParam('deckId');
     if (deckId === null) {
+      return;
+    }
+    if (deckId === 'new') {
+      const deck = new Deck();
+      this.onDeckLoaded(deck);
+      this.setState({deck: deck});
       return;
     }
     DeckQueryHelper.findDeckById(

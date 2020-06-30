@@ -1,109 +1,92 @@
-import {SafeAreaView, StatusBar, View} from 'react-native';
+import {View} from 'react-native';
 import {authStyles} from '../../../auth/AuthStyles';
 import {Appbar, FAB, Snackbar, TextInput} from 'react-native-paper';
 import {globalStyles} from '../../../../GlobalStyles';
-import React, {useEffect, useState} from 'react';
-import {useBaseState} from '../../../../BaseState';
-import {DeckQueryHelper} from '../../../../db/DeckQueryHelper';
-import {Deck} from '../../../../db/Deck';
+import React from 'react';
 import {appColors} from '../../../../theme';
 import {DeckCrudHelper} from '../../../../db/DeckCrudHelper';
 import {AuthHelper} from '../../../../db/AuthHelper';
+import {BaseDeckScreen} from '../base/BaseDeckScreen';
 
-function createDeck(deck, baseState, navigation) {
-  deck.ownerId = AuthHelper.userId();
-  DeckCrudHelper.useCreateDeck(deck, success => {
-    baseState.setLoading(false);
-    if (success) {
-      navigation.goBack();
-    } else {
-      baseState.setError('firebase_err');
-    }
-  });
-}
+export class NewDeckScreen extends BaseDeckScreen {
+  buildCustomState(): {} {
+    return {
+      name: '',
+    };
+  }
 
-function updateDeck(deck, baseState, navigation) {
-  DeckCrudHelper.useUpdateDeck(deck, success => {
-    baseState.setLoading(false);
-    if (success) {
-      navigation.goBack();
-    } else {
-      baseState.setError('firebase_err');
-    }
-  });
-}
+  onDeckLoaded(deck) {
+    this.state.name = deck.name;
+  }
 
-function loadDeck(deckId, setDeck, setName) {
-  if (deckId !== 'new') {
-    DeckQueryHelper.useDeckById(
-      deckId,
-      deck => {
-        if (!deck) {
-          return;
-        }
-        setDeck(deck);
-        setName(deck.name);
-      },
-      error => {
-        console.log(error);
-      },
+  buildAppbar() {
+    return (
+      <Appbar.Header style={authStyles.appBar}>
+        <Appbar.BackAction onPress={() => this.navigation.goBack()} />
+        <Appbar.Content title="Neues Deck" />
+      </Appbar.Header>
     );
   }
-}
 
-export function NewDeckScreen({route, navigation}) {
-  const {deckId} = route.params;
-
-  const baseState = useBaseState();
-  const [deck, setDeck] = useState(new Deck());
-  const [name, setName] = useState('');
-
-  useEffect(() => {
-    loadDeck(deckId, setDeck, setName);
-  }, [deckId]);
-
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={authStyles.content}>
-        <Appbar.Header style={authStyles.appBar}>
-          <Appbar.BackAction onPress={() => navigation.goBack()} />
-          <Appbar.Content title="Neues Deck" />
-        </Appbar.Header>
+  buildContent() {
+    return (
+      <>
         <View style={authStyles.contentContainer}>
           <TextInput
             left={
               <TextInput.Icon color={appColors.textIconColor} name="folder" />
             }
             label="Name"
-            value={name}
+            value={this.state.name}
             onChangeText={text => {
-              setName(text);
+              this.setState({name: text});
             }}
             style={authStyles.text}
           />
         </View>
         <Snackbar
-          visible={baseState.error}
-          onDismiss={() => baseState.setError(null)}>
+          visible={this.getError()}
+          onDismiss={() => this.setError(null)}>
           Beim Ausführen dieser Aktion ist etwas schief gelaufen.
         </Snackbar>
         <FAB
           style={globalStyles.fab}
           icon="check"
-          loading={baseState.loading}
-          disabled={baseState.loading}
+          loading={this.isLoading()}
+          disabled={this.isLoading()}
           onPress={() => {
-            baseState.setLoading(true);
-            deck.name = name;
-            if (deckId === 'new') {
-              createDeck(deck, baseState, navigation);
+            this.setIsLoading(true);
+            this.state.deck.name = this.state.name;
+            if (this.getNavigationParam('deckId') === 'new') {
+              this.createDeck();
             } else {
-              updateDeck(deck, baseState, navigation);
+              this.updateDeck();
             }
           }}
         />
-      </SafeAreaView>
-    </>
-  );
+      </>
+    );
+  }
+
+  createDeck() {
+    this.state.deck.ownerId = AuthHelper.userId();
+    DeckCrudHelper.createDeck(this.state.deck, success =>
+      this.onDeckChangeResult(success),
+    );
+  }
+
+  updateDeck() {
+    DeckCrudHelper.updateDeck(this.state.deck, success =>
+      this.onDeckChangeResult(success),
+    );
+  }
+
+  onDeckChangeResult(success: boolean) {
+    this.setIsLoading(false);
+    if (success) {
+      this.navigation.goBack();
+    } else {
+      this.setError('firebase_err');
+    }
+  }
 }
