@@ -18,7 +18,7 @@ export default class BaseStatefulScreen extends React.Component {
   }
 
   setError(error: string) {
-    this.setState({error: null});
+    this.setState({error: error});
   }
 
   getError(): string {

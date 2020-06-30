@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import Image from 'react-native-scalable-image';
 import {authStyles} from '../../../auth/AuthStyles';
 import {
@@ -7,6 +7,7 @@ import {
   Divider,
   FAB,
   IconButton,
+  Snackbar,
   TextInput,
 } from 'react-native-paper';
 import {globalStyles} from '../../../../GlobalStyles';
@@ -269,6 +270,9 @@ export class NewDeckCardScreen extends BaseDeckScreen {
             }
           />
         )}
+        <Snackbar visible={this.getError()} onDismiss={() => this.setError()}>
+          Beim Hinzufügen ist etwas schief gelaufen.
+        </Snackbar>
         <FAB
           style={globalStyles.fab}
           visible={!this.state.isTakingPicture}
@@ -348,6 +352,15 @@ export class NewDeckCardScreen extends BaseDeckScreen {
   }
 
   save() {
+    if (
+      !this.state.question ||
+      this.state.question.length === 0 ||
+      !this.state.answer ||
+      this.state.answer === 0
+    ) {
+      this.setError('input-err');
+      return;
+    }
     const deck = this.state.deck;
     const cardId = this.getNavigationParam('cardId');
     const card = this.state.card;
