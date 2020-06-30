@@ -1,9 +1,7 @@
-import {SafeAreaView, StatusBar, View} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import {authStyles} from '../auth/AuthStyles';
-import {Appbar, Button, FAB, Headline, TextInput} from 'react-native-paper';
-import {appColors} from '../../theme';
+import {Appbar} from 'react-native-paper';
 import React from 'react';
-import {globalStyles} from '../../GlobalStyles';
 import auth from '@react-native-firebase/auth';
 
 function logout() {

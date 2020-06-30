@@ -1,11 +1,4 @@
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  View,
-  ScrollView,
-  PermissionsAndroid,
-} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import Image from 'react-native-scalable-image';
 import {authStyles} from '../../../auth/AuthStyles';
 import {
@@ -17,15 +10,12 @@ import {
   TextInput,
 } from 'react-native-paper';
 import {globalStyles} from '../../../../GlobalStyles';
-import React, {useState, useEffect, createRef} from 'react';
+import React, {createRef} from 'react';
 import {useDeckCardBaseState} from '../../../../BaseState';
 import {appColors} from '../../../../theme';
-import {useLoadDeck} from '../../../../db/DeckLoadHelper';
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
 import Camera from '../component/Camera';
-import storage from '@react-native-firebase/storage';
 import TrackPlayer from 'react-native-track-player';
-import SoundRecorder from 'react-native-sound-recorder';
 import AudioRecorder from '../component/AudioRecorder';
 import FileUploadHelper from '../../../../db/FileUploadHelper';
 

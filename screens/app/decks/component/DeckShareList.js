@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, Dimensions, View} from 'react-native';
-import {IconButton, List} from 'react-native-paper';
-import {Avatar} from 'react-native-paper';
+import {FlatList, StyleSheet} from 'react-native';
+import {Avatar, IconButton, List} from 'react-native-paper';
 import md5 from 'blueimp-md5';
 import {appColors} from '../../../../theme';
 
@@ -12,7 +11,6 @@ const styles = StyleSheet.create({
 });
 
 export default class DeckShareList extends Component {
-
   getProfileImageUrl(mail) {
     const hashedMail = md5(mail.trim().toLowerCase());
     return 'https://www.gravatar.com/avatar/' + hashedMail;

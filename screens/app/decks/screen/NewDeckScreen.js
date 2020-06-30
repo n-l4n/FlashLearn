@@ -1,8 +1,8 @@
 import {SafeAreaView, StatusBar, View} from 'react-native';
 import {authStyles} from '../../../auth/AuthStyles';
-import {Appbar, Button, FAB, Snackbar, TextInput} from 'react-native-paper';
+import {Appbar, FAB, Snackbar, TextInput} from 'react-native-paper';
 import {globalStyles} from '../../../../GlobalStyles';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useBaseState} from '../../../../BaseState';
 import {DeckQueryHelper} from '../../../../db/DeckQueryHelper';
 import {Deck} from '../../../../db/Deck';

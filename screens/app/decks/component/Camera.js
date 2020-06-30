@@ -1,7 +1,7 @@
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {RNCamera} from 'react-native-camera';
-import {Button, Text} from 'react-native-paper';
+import {Button} from 'react-native-paper';
 
 export default class Camera extends React.Component {
   render() {

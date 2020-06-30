@@ -1,7 +1,4 @@
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
 import {HomeScreen} from '../screen/HomeScreen';
-import {appColors} from '../../../../theme';
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NewDeckScreen} from '../screen/NewDeckScreen';

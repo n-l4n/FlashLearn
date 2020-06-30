@@ -1,6 +1,6 @@
 import {SafeAreaView, StatusBar, View} from 'react-native';
 import {authStyles} from './AuthStyles';
-import {Appbar, FAB, Headline, TextInput, Snackbar} from 'react-native-paper';
+import {Appbar, FAB, Headline, Snackbar, TextInput} from 'react-native-paper';
 import {appColors} from '../../theme';
 import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';

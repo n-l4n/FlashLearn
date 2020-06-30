@@ -1,16 +1,14 @@
 import {
   Appbar,
   Caption,
-  FAB,
-  TextInput,
-  IconButton,
   Divider,
+  IconButton,
+  TextInput,
 } from 'react-native-paper';
-import {globalStyles} from '../../../../GlobalStyles';
 import React, {useState} from 'react';
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
 import {authStyles} from '../../../auth/AuthStyles';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {appColors} from '../../../../theme';
 import {DeckCrudHelper} from '../../../../db/DeckCrudHelper';
 import DeckShareList from '../component/DeckShareList';

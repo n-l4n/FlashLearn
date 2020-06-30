@@ -1,13 +1,6 @@
 import {SafeAreaView, StatusBar, View} from 'react-native';
 import {authStyles} from './AuthStyles';
-import {
-  Appbar,
-  Button,
-  FAB,
-  Headline,
-  ProgressBar,
-  TextInput,
-} from 'react-native-paper';
+import {FAB, Headline, ProgressBar} from 'react-native-paper';
 import React from 'react';
 import {globalStyles} from '../../GlobalStyles';
 

@@ -1,8 +1,7 @@
-import {SafeAreaView, StatusBar, View} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import {authStyles} from '../../../auth/AuthStyles';
-import {Appbar, Button, FAB, Headline, TextInput} from 'react-native-paper';
-import {appColors} from '../../../../theme';
-import React, {useState, useEffect} from 'react';
+import {Appbar, FAB} from 'react-native-paper';
+import React, {useEffect, useState} from 'react';
 import {globalStyles} from '../../../../GlobalStyles';
 import auth from '@react-native-firebase/auth';
 import {DeckQueryHelper} from '../../../../db/DeckQueryHelper';

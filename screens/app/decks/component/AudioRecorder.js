@@ -1,6 +1,6 @@
 import React from 'react';
 import {IconButton, Title} from 'react-native-paper';
-import {PermissionsAndroid, View, StyleSheet, Animated} from 'react-native';
+import {Animated, PermissionsAndroid, StyleSheet, View} from 'react-native';
 import SoundRecorder from 'react-native-sound-recorder';
 
 export default class AudioRecorder extends React.Component {

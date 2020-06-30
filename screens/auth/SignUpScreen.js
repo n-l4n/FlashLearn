@@ -1,11 +1,11 @@
-import {SafeAreaView, StatusBar, StyleSheet, View} from 'react-native';
+import {SafeAreaView, StatusBar, View} from 'react-native';
 import {
   Appbar,
   Button,
   FAB,
-  TextInput,
   Headline,
   Snackbar,
+  TextInput,
 } from 'react-native-paper';
 import {appColors} from '../../theme';
 import React, {useState} from 'react';
@@ -87,7 +87,9 @@ export function SignUpScreen({navigation}) {
             Oder einloggen
           </Button>
         </View>
-        <Snackbar visible={baseState.error} onDismiss={() => baseState.setError(null)}>
+        <Snackbar
+          visible={baseState.error}
+          onDismiss={() => baseState.setError(null)}>
           Beim Registrieren ist etwas schief gelaufen.
         </Snackbar>
         <FAB
