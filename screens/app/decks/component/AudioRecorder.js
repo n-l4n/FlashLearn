@@ -2,7 +2,6 @@ import React from 'react';
 import {IconButton} from 'react-native-paper';
 import {PermissionsAndroid, View} from 'react-native';
 import SoundRecorder from 'react-native-sound-recorder';
-import storage from '@react-native-firebase/storage';
 
 export default class AudioRecorder extends React.Component {
   constructor(props) {

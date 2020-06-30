@@ -2,6 +2,7 @@ import {uuid} from 'uuidv4';
 
 export class DeckCard {
   id: string = uuid();
+  box: number;
   question: string;
   answer: string;
   picture: string;
@@ -14,6 +15,7 @@ export class DeckCard {
 
     card.question = json.question;
     card.answer = json.answer;
+    card.box = 'box' in json ? json.box : 0;
     card.picture = 'picture' in json ? json.picture : null;
     card.recording = 'recording' in json ? json.recording : null;
     card.list = 'list' in json ? json.list : null;

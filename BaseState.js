@@ -19,6 +19,8 @@ export class BaseDeckCardState {
   question;
   answer;
   card;
+  picture;
+  recording;
   isTakingPicture;
   isUploadingPicture;
   isRecordingAudio;
@@ -27,6 +29,8 @@ export class BaseDeckCardState {
   setQuestion: () => {};
   setAnswer: () => {};
   setCard: () => {};
+  setPicture: () => {};
+  setRecording: () => {};
   setIsTakingPicture: () => {};
   setIsUploadingPicture: () => {};
   setIsRecordingAudio: () => {};
@@ -54,6 +58,8 @@ export function useDeckCardBaseState(): BaseDeckCardState {
   [baseState.question, baseState.setQuestion] = useState('');
   [baseState.answer, baseState.setAnswer] = useState('');
   [baseState.card, baseState.setCard] = useState(new DeckCard());
+  [baseState.picture, baseState.setPicture] = useState(null);
+  [baseState.recording, baseState.setRecording] = useState(null);
   [baseState.isTakingPicture, baseState.setIsTakingPicture] = useState(false);
   [baseState.isUploadingPicture, baseState.setIsUploadingPicture] = useState(
     false,

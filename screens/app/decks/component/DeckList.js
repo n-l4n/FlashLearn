@@ -34,7 +34,10 @@ export default class DeckList extends Component {
         data={this.props.decks}
         renderItem={listItem => {
           return (
-            <Card key={listItem.item.id} style={styles.card} onPress={() => this.props.onDeckPress(listItem.item)}>
+            <Card
+              key={listItem.item.id}
+              style={styles.card}
+              onPress={() => this.props.onDeckPress(listItem.item)}>
               <Card.Content style={styles.cardContent}>
                 <View style={styles.cardDescription}>
                   <Title>{listItem.item.name}</Title>

@@ -94,15 +94,15 @@ function NewDeckCardScreenImpl(baseState, baseCardState, navigation) {
             />
           }
           label="Antwort"
-          value={baseCardState.question}
-          onChangeText={text => baseCardState.setQuestion(text)}
+          value={baseCardState.answer}
+          onChangeText={text => baseCardState.setAnswer(text)}
           style={styles.textInput}
         />
         <View style={styles.buttonContainer}>
           <FAB
             visible={!baseCardState.isTakingPicture}
             loading={baseCardState.isUploadingPicture}
-            disabled={baseCardState.isUploadingPicture}
+            disabled={isHandlingMedia(baseCardState)}
             small
             icon="camera"
             onPress={() => baseCardState.setIsTakingPicture(true)}
@@ -112,9 +112,7 @@ function NewDeckCardScreenImpl(baseState, baseCardState, navigation) {
             loading={
               baseCardState.isRecordingAudio || baseCardState.isUploadingAudio
             }
-            disabled={
-              baseCardState.isRecordingAudio || baseCardState.isUploadingAudio
-            }
+            disabled={isHandlingMedia(baseCardState)}
             small
             icon="microphone"
             onPress={() => ref.startRecording(baseCardState)}
@@ -149,36 +147,34 @@ function NewDeckCardScreenImpl(baseState, baseCardState, navigation) {
             }
           />
         </View>
-        {'picture' in baseCardState.card &&
-          baseCardState.card.picture !== null && (
-            <View style={styles.subSection}>
-              <Divider />
-              <Caption style={styles.subSectionHint}>BILD</Caption>
-              <Image
-                source={{
-                  uri: baseCardState.card.picture,
-                }}
-                width={150}
-                resizeMode="contain"
-                style={styles.subSectionContent}
-              />
-            </View>
-          )}
-        {'recording' in baseCardState.card &&
-          baseCardState.card.recording !== null && (
-            <View style={styles.subSection}>
-              <Divider />
-              <Caption style={styles.subSectionHint}>AUFNAHME</Caption>
-              <IconButton
-                icon="play"
-                size={32}
-                onPress={() => {
-                  startPlayback(baseCardState);
-                }}
-                style={styles.subSectionContent}
-              />
-            </View>
-          )}
+        {baseCardState.picture && (
+          <View style={styles.subSection}>
+            <Divider />
+            <Caption style={styles.subSectionHint}>BILD</Caption>
+            <Image
+              source={{
+                uri: baseCardState.card.picture,
+              }}
+              width={150}
+              resizeMode="contain"
+              style={styles.subSectionContent}
+            />
+          </View>
+        )}
+        {baseCardState.recording && (
+          <View style={styles.subSection}>
+            <Divider />
+            <Caption style={styles.subSectionHint}>AUFNAHME</Caption>
+            <IconButton
+              icon="play"
+              size={32}
+              onPress={() => {
+                startPlayback(baseCardState);
+              }}
+              style={styles.subSectionContent}
+            />
+          </View>
+        )}
       </ScrollView>
       {baseCardState.isTakingPicture && (
         <Camera
@@ -209,7 +205,7 @@ async function onPictureTaken(baseState, baseCardState, uri) {
       }
       baseCardState.setIsUploadingPicture(false);
       baseCardState.card.picture = url;
-      baseCardState.setCard(baseCardState.card);
+      baseCardState.setPicture(url);
     },
   );
 }
@@ -230,7 +226,7 @@ async function onRecordingStop(path, baseState, baseCardState) {
       }
       baseCardState.setIsUploadingAudio(false);
       baseCardState.card.recording = url;
-      baseCardState.setCard(baseCardState.card);
+      baseCardState.setRecording(url);
     },
   );
 }
@@ -256,8 +252,18 @@ function NewDeckCardScreenAppbarImpl(baseState, navigation) {
   );
 }
 
+function isHandlingMedia(baseCardState) {
+  return (
+    baseCardState.isUploadingPicture ||
+    baseCardState.isUploadingAudio ||
+    baseCardState.isRecordingAudio
+  );
+}
+
 export function NewDeckCardScreen({route, navigation}) {
   const baseCardState = useDeckCardBaseState();
+  baseCardState.picture = baseCardState.card.picture;
+  baseCardState.recording = baseCardState.card.recording;
   return BaseDeckScreen(
     route,
     navigation,
