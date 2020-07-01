@@ -53,6 +53,13 @@ export class HomeScreen extends BaseContentLoadScreen {
                 deckId: deck.id,
               })
             }
+            onLearn={deck => {
+              this.navigation.navigate('Learn', {
+                deckId: deck.id,
+                box: -1,
+                count: 10,
+              });
+            }}
           />
         ) : (
           <EmptyState

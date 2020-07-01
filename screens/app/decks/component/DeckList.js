@@ -49,7 +49,7 @@ export default class DeckList extends Component {
                   <IconButton
                     icon="play-circle"
                     size={20}
-                    onPress={() => console.log('Pressed')}
+                    onPress={() => this.props.onLearn(listItem.item)}
                   />
                   <IconButton
                     icon="pencil"

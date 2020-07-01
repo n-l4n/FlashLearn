@@ -35,7 +35,16 @@ export class DeckCardsScreen extends BaseDeckScreen {
               : 'Alle Karten'
           }
         />
-        <Appbar.Action icon="play-circle" onPress={() => {}} />
+        <Appbar.Action
+          icon="play-circle"
+          onPress={() => {
+            this.navigation.navigate('Learn', {
+              deckId: this.state.deck.id,
+              box: this.state.box,
+              count: 10,
+            });
+          }}
+        />
       </Appbar.Header>
     );
   }

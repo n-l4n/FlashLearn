@@ -66,7 +66,7 @@ export default class LearnScreen extends BaseDeckScreen {
 
     if (this.box !== -1) {
       this.state.cards = this.getRandom(
-        deck.cards.filter(card => card.box === this.box),
+        deck.cards.filter(card => card.getCurrentBoxForUser() === this.box),
         this.count,
       );
     } else {
