@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Icon} from 'react-native-vector-icons/dist';
-import {Text, IconButton} from 'react-native-paper';
+import {IconButton, Text} from 'react-native-paper';
+import {ThemeSwitcher} from '../../../../index';
 
 export default class EmptyState extends React.Component {
   styles = StyleSheet.create({
@@ -11,7 +11,6 @@ export default class EmptyState extends React.Component {
       flex: 1,
     },
     text: {
-      color: 'rgba(0, 0, 0, .6)',
       marginHorizontal: 16,
       textAlign: 'center',
     },
@@ -23,9 +22,15 @@ export default class EmptyState extends React.Component {
         <IconButton
           icon={this.props.icon}
           size={128}
-          color={'rgba(0, 0, 0, .6)'}
+          color={ThemeSwitcher.theme.colors.placeholder}
         />
-        <Text style={this.styles.text}>{this.props.text}</Text>
+        <Text
+          style={[
+            this.styles.text,
+            {color: ThemeSwitcher.theme.colors.placeholder},
+          ]}>
+          {this.props.text}
+        </Text>
       </View>
     );
   }

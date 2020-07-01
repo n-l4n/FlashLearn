@@ -5,10 +5,12 @@ import React from 'react';
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
 import BoxList from '../component/BoxList';
 import {appColors} from '../../../../theme';
-import {View, StyleSheet} from 'react-native';
 import {AuthHelper} from '../../../../db/AuthHelper';
 
 export class DeckScreen extends BaseDeckScreen {
+  constructor(props) {
+    super(props);
+  }
   buildAppbar() {
     return (
       <Appbar.Header style={authStyles.appBar}>

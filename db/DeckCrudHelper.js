@@ -1,4 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
+import DeckComplaint from './DeckComplaint';
 
 export class DeckCrudHelper {
   static createDeck(deck, onResult) {
@@ -83,6 +84,40 @@ export class DeckCrudHelper {
     deck.cards.splice(index, 1);
 
     this.updateDeck(deck, onResult);
+  }
+
+  static sendDeckComplaint(deck, card, message, onResult) {
+    const complaint = new DeckComplaint();
+    complaint.deckId = deck.id;
+    complaint.cardId = card.id;
+    complaint.message = message;
+
+    firestore()
+      .collection('complaints')
+      .add(complaint)
+      .then(() => {
+        onResult(true);
+      })
+      .catch(() => {
+        onResult(false);
+      });
+  }
+
+  static setDeckComplaintAsDone(complaint, onResult) {
+    const id = complaint.id;
+    delete complaint.id;
+    complaint.isDone = true;
+
+    firestore()
+      .collection('complaints')
+      .doc(id)
+      .set(complaint)
+      .then(() => {
+        onResult(true);
+      })
+      .catch(() => {
+        onResult(false);
+      });
   }
 
   static shareDeck(deck, newShareMail, onResult) {

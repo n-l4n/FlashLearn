@@ -1,4 +1,4 @@
-import {SafeAreaView, StatusBar, View} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import {authStyles} from './AuthStyles';
 import {Appbar, FAB, Headline, Snackbar, TextInput} from 'react-native-paper';
 import {appColors} from '../../theme';
@@ -6,6 +6,8 @@ import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {globalStyles} from '../../GlobalStyles';
 import {useBaseState} from '../../BaseState';
+import ThemedStatusBar from '../app/component/ThemedStatusBar';
+import {ThemeSwitcher} from '../../index';
 
 function sendForgotPassword(mail, setPasswordSent, baseState) {
   if (!mail) {
@@ -33,8 +35,12 @@ export function ForgotPwScreen({navigation}) {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={authStyles.content}>
+      <ThemedStatusBar />
+      <SafeAreaView
+        style={[
+          authStyles.content,
+          {backgroundColor: ThemeSwitcher.theme.colors.backdrop},
+        ]}>
         <Appbar.Header style={authStyles.appBar}>
           <Appbar.BackAction onPress={() => navigation.goBack()} />
           <Appbar.Content title="Passwort vergessen" />

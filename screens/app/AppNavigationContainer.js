@@ -3,8 +3,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {appColors} from '../../theme';
 import {HomeNavigationContainer} from './decks/nav/HomeNavigationContainer';
-import {NotificationScreen} from './NotificationScreen';
 import {SettingsScreen} from './SettingsScreen';
+import {NotificationNavigationContainer} from './notifications/nav/NotificationNavigationContainer';
+import {ThemeSwitcher} from '../../index';
 
 export function AppNavigationContainer() {
   const Tab = createMaterialBottomTabNavigator();
@@ -16,8 +17,8 @@ export function AppNavigationContainer() {
         headerMode="none"
         shifting={true}
         sceneAnimationEnabled={false}
-        activeColor="#000000"
-        inactiveColor="rgba(0, 0, 0, .6)">
+        activeColor={ThemeSwitcher.theme.colors.text}
+        inactiveColor={ThemeSwitcher.theme.colors.placeholder}>
         <Tab.Screen
           name="Decks"
           component={HomeNavigationContainer}
@@ -28,7 +29,7 @@ export function AppNavigationContainer() {
         />
         <Tab.Screen
           name="Nachrichten"
-          component={NotificationScreen}
+          component={NotificationNavigationContainer}
           options={{
             tabBarIcon: 'bell',
             tabBarColor: appColors.primary,

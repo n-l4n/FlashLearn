@@ -1,13 +1,14 @@
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
-import {Appbar, Caption, Card, Divider, FAB, Title} from 'react-native-paper';
+import {Appbar, Button, Caption, Card, Divider, FAB, Modal, Portal, Text, TextInput, Title} from 'react-native-paper';
 import {authStyles} from '../../../auth/AuthStyles';
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import DeckMultipleChoiceList from '../component/DeckMultipleChoiceList';
 import AudioPlayer from '../component/AudioPlayer';
 import DeckAnswerList from '../component/DeckAnswerList';
 import Image from 'react-native-scalable-image';
 import {DeckCrudHelper} from '../../../../db/DeckCrudHelper';
+import {appColors} from '../../../../theme';
 
 export default class LearnScreen extends BaseDeckScreen {
   styles = StyleSheet.create({
@@ -44,6 +45,12 @@ export default class LearnScreen extends BaseDeckScreen {
       marginVertical: 8,
       marginHorizontal: 16,
     },
+    modal: {
+      margin: 8,
+    },
+    modalInput: {
+      marginVertical: 16,
+    },
   });
   box: number;
   count: number;
@@ -54,6 +61,8 @@ export default class LearnScreen extends BaseDeckScreen {
       cards: [],
       currentCardIndex: 0,
       isShowingQuestion: true,
+      complaintModalVisible: false,
+      complaintMessage: '',
     };
   }
 
@@ -125,14 +134,75 @@ export default class LearnScreen extends BaseDeckScreen {
       <Appbar.Header style={authStyles.appBar}>
         <Appbar.BackAction onPress={() => this.navigation.goBack()} />
         <Appbar.Content title="Lernen" />
+        <Appbar.Action
+          icon="alert-decagram"
+          onPress={() => {
+            this.showModal();
+          }}
+        />
       </Appbar.Header>
     );
+  }
+
+  showModal() {
+    this.setState({
+      complaintModalVisible: true,
+    });
+  }
+
+  hideModal() {
+    this.setState({
+      complaintModalVisible: false,
+      complaintMessage: '',
+    });
+  }
+
+  sendComplaint() {
+    DeckCrudHelper.sendDeckComplaint(
+      this.state.deck,
+      this.state.cards[this.state.currentCardIndex],
+      this.state.complaintMessage,
+      success => {},
+    );
+    this.hideModal();
   }
 
   buildContent() {
     const card = this.state.cards[this.state.currentCardIndex];
     return (
       <>
+        <Portal>
+          <Modal
+            style={this.styles.modal}
+            visible={this.state.complaintModalVisible}
+            dismissable={true}
+            onDismiss={() => this.hideModal()}>
+            <Card>
+              <Card.Title title={'Beschwerde'} />
+              <Card.Content>
+                <Text>Welche Beschwerde hast du?</Text>
+                <TextInput
+                  left={
+                    <TextInput.Icon
+                      color={appColors.textIconColor}
+                      name="alert-decagram"
+                    />
+                  }
+                  label="Beschwerde"
+                  value={this.state.complaintMessage}
+                  onChangeText={text => {
+                    this.setState({complaintMessage: text});
+                  }}
+                  style={this.styles.modalInput}
+                />
+              </Card.Content>
+              <Card.Actions>
+                <Button onPress={() => this.hideModal()}>Abbrechen</Button>
+                <Button onPress={() => this.sendComplaint()}>Ok</Button>
+              </Card.Actions>
+            </Card>
+          </Modal>
+        </Portal>
         <ScrollView>
           <Card style={this.styles.card}>
             <Card.Content>

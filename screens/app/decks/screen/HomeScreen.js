@@ -1,14 +1,11 @@
-import {SafeAreaView, StatusBar} from 'react-native';
 import {authStyles} from '../../../auth/AuthStyles';
 import {Appbar, FAB} from 'react-native-paper';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {globalStyles} from '../../../../GlobalStyles';
 import auth from '@react-native-firebase/auth';
 import {DeckQueryHelper} from '../../../../db/DeckQueryHelper';
 import DeckList from '../component/DeckList';
-import BaseStatefulScreen from '../base/BaseStatefulScreen';
 import BaseContentLoadScreen from '../base/BaseContentLoadScreen';
-import DeckCardList from '../component/DeckCardList';
 import EmptyState from '../component/EmptyState';
 
 export class HomeScreen extends BaseContentLoadScreen {

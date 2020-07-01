@@ -1,9 +1,11 @@
 import BaseStatefulScreen from './BaseStatefulScreen';
 import {ActivityIndicator, Appbar} from 'react-native-paper';
 import {authStyles} from '../../../auth/AuthStyles';
-import {SafeAreaView, StatusBar, View} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import {appColors} from '../../../../theme';
 import React from 'react';
+import {ThemeSwitcher} from '../../../../index';
+import ThemedStatusBar from '../../component/ThemedStatusBar';
 
 export default class BaseContentLoadScreen extends BaseStatefulScreen {
   render() {
@@ -16,8 +18,12 @@ export default class BaseContentLoadScreen extends BaseStatefulScreen {
 
     return (
       <>
-        <StatusBar barStyle="dark-content" />
-        <SafeAreaView style={authStyles.contentNoCenter}>
+        <ThemedStatusBar />
+        <SafeAreaView
+          style={[
+            authStyles.contentNoCenter,
+            {backgroundColor: ThemeSwitcher.theme.colors.backdrop},
+          ]}>
           {appBar}
           {content}
         </SafeAreaView>

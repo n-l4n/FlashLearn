@@ -1,12 +1,5 @@
-import {SafeAreaView, StatusBar, View} from 'react-native';
-import {
-  Appbar,
-  Button,
-  FAB,
-  Headline,
-  Snackbar,
-  TextInput,
-} from 'react-native-paper';
+import {SafeAreaView, View} from 'react-native';
+import {Appbar, Button, FAB, Headline, Snackbar, TextInput} from 'react-native-paper';
 import {appColors} from '../../theme';
 import React, {useState} from 'react';
 import {authStyles} from './AuthStyles';
@@ -14,6 +7,8 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {globalStyles} from '../../GlobalStyles';
 import {useBaseState} from '../../BaseState';
+import ThemedStatusBar from '../app/component/ThemedStatusBar';
+import {ThemeSwitcher} from '../../index';
 
 function signUp(mail, name, password, baseState) {
   if (!mail || !name || !password) {
@@ -45,8 +40,12 @@ export function SignUpScreen({navigation}) {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={authStyles.content}>
+      <ThemedStatusBar />
+      <SafeAreaView
+        style={[
+          authStyles.content,
+          {backgroundColor: ThemeSwitcher.theme.colors.backdrop},
+        ]}>
         <Appbar.Header style={authStyles.appBar}>
           <Appbar.Content title="Registrieren" />
         </Appbar.Header>

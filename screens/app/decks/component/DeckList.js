@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
-import {Card, IconButton, Text, Title} from 'react-native-paper';
+import {Caption, Card, IconButton, Title} from 'react-native-paper';
 import {AuthHelper} from '../../../../db/AuthHelper';
 
 const styles = StyleSheet.create({
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cardCount: {
-    color: 'rgba(0, 0, 0, .6)',
+    fontSize: 14,
   },
 });
 
@@ -42,9 +42,9 @@ export default class DeckList extends Component {
               <Card.Content style={styles.cardContent}>
                 <View style={styles.cardDescription}>
                   <Title>{listItem.item.name}</Title>
-                  <Text style={styles.cardCount}>
+                  <Caption style={styles.cardCount}>
                     {listItem.item.cards.length} Karten
-                  </Text>
+                  </Caption>
                 </View>
                 <View style={styles.cardActions}>
                   <IconButton

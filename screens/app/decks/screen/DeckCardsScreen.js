@@ -1,5 +1,5 @@
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
-import {Appbar, Text} from 'react-native-paper';
+import {Appbar} from 'react-native-paper';
 import {authStyles} from '../../../auth/AuthStyles';
 import React from 'react';
 import DeckCardList from '../component/DeckCardList';

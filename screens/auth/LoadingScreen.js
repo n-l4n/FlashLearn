@@ -1,14 +1,20 @@
-import {SafeAreaView, StatusBar, View} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import {authStyles} from './AuthStyles';
 import {FAB, Headline, ProgressBar} from 'react-native-paper';
 import React from 'react';
 import {globalStyles} from '../../GlobalStyles';
+import ThemedStatusBar from '../app/component/ThemedStatusBar';
+import {ThemeSwitcher} from '../../index';
 
 export function LoadingScreen() {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={authStyles.content}>
+      <ThemedStatusBar />
+      <SafeAreaView
+        style={[
+          authStyles.content,
+          {backgroundColor: ThemeSwitcher.theme.colors.backdrop},
+        ]}>
         <Headline style={authStyles.logo}>FlashLearn</Headline>
         <View style={authStyles.contentContainer}>
           <ProgressBar indeterminate="true" />

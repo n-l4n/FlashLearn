@@ -1,10 +1,4 @@
-import {
-  Appbar,
-  Caption,
-  Divider,
-  IconButton,
-  TextInput,
-} from 'react-native-paper';
+import {Appbar, Caption, Divider, IconButton, TextInput} from 'react-native-paper';
 import React from 'react';
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
 import {authStyles} from '../../../auth/AuthStyles';

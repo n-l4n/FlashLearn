@@ -1,22 +1,13 @@
-import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import Image from 'react-native-scalable-image';
 import {authStyles} from '../../../auth/AuthStyles';
-import {
-  Appbar,
-  Caption,
-  Divider,
-  FAB,
-  IconButton,
-  Snackbar,
-  TextInput,
-} from 'react-native-paper';
+import {Appbar, Caption, Divider, FAB, Snackbar, TextInput} from 'react-native-paper';
 import {globalStyles} from '../../../../GlobalStyles';
 import React, {createRef} from 'react';
 import {BaseCardState} from '../../../../BaseState';
 import {appColors} from '../../../../theme';
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
 import Camera from '../component/Camera';
-import TrackPlayer from 'react-native-track-player';
 import AudioRecorder from '../component/AudioRecorder';
 import FileUploadHelper from '../../../../db/FileUploadHelper';
 import DeckAnswerList from '../component/DeckAnswerList';

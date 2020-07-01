@@ -1,14 +1,8 @@
-import {SafeAreaView, StatusBar, View} from 'react-native';
-import {authStyles} from '../../../auth/AuthStyles';
-import {ActivityIndicator, Appbar} from 'react-native-paper';
-import {appColors} from '../../../../theme';
 import React from 'react';
-import {useDeckBaseState} from '../../../../BaseState';
-import {useLoadDeck} from '../../../../db/DeckLoadHelper';
 import {DeckQueryHelper} from '../../../../db/DeckQueryHelper';
 import {Deck} from '../../../../db/Deck';
-import BaseStatefulScreen from './BaseStatefulScreen';
 import BaseContentLoadScreen from './BaseContentLoadScreen';
+
 export class BaseDeckScreen extends BaseContentLoadScreen {
   deckSub;
   constructor(props) {

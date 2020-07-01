@@ -1,4 +1,5 @@
 import {DefaultTheme} from 'react-native-paper';
+import {ThemeSwitcher} from './index';
 
 export const appColors = {
   primary: '#64B5F6',
@@ -6,11 +7,8 @@ export const appColors = {
   textIconColor: 'rgba(0, 0, 0, .6)',
 };
 
-export const theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: appColors.primary,
-    accent: appColors.accent,
-  },
-};
+export function themedBackgroundColor() {
+  return {
+    backgroundColor: ThemeSwitcher.theme.colors.backdrop,
+  };
+}

@@ -1,6 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import {Deck} from './Deck';
 import {AuthHelper} from './AuthHelper';
+import DeckComplaint from './DeckComplaint';
 
 export class DeckQueryHelper {
   static findDecks(onResult, onError) {
@@ -40,6 +41,34 @@ export class DeckQueryHelper {
       }
     }
     return decks;
+  }
+
+  static findDeckComplaints(decks, onResult, onError) {
+    let query = firestore().collection('complaints').where('isDone', '==', false);
+    let whereCount = 0;
+    for (const deck of decks) {
+      if (!deck.ownerId === AuthHelper.userId()) {
+        continue;
+      }
+      query = query.where('deckId', '==', deck.id);
+      whereCount++;
+    }
+    if (whereCount === 0) {
+      onResult([]);
+      return;
+    }
+    query.onSnapshot(snapshot => {
+      if (snapshot && snapshot._docs) {
+        const complaints = [];
+        for (const json of snapshot._docs) {
+          json._data.id = json.id;
+          complaints.push(DeckComplaint.fromJSON(json._data));
+        }
+        onResult(complaints);
+      } else {
+        onResult([]);
+      }
+    }, onError);
   }
 
   static findDeckById(id, onResult, onError) {

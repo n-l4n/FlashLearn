@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {IconButton, List, TextInput} from 'react-native-paper';
 import {appColors} from '../../../../theme';
-import {MultipleChoiceItem} from '../../../../db/DeckCard';
 
 const styles = StyleSheet.create({
   listItem: {

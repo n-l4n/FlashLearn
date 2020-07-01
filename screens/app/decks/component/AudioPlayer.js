@@ -1,6 +1,5 @@
 import React from 'react';
 import {IconButton} from 'react-native-paper';
-import {View} from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 
 export default class AudioPlayer extends React.Component {
