@@ -4,7 +4,6 @@ export default class Pref {
   static async get(key: string, defValue: any) {
     let val = await DefaultPreference.get(key);
     val = val ? val : defValue;
-    console.log(val);
     return val;
   }
 

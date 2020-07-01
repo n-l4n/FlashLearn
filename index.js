@@ -53,7 +53,7 @@ export class ThemeSwitcher {
 export default function Main() {
   [ThemeSwitcher.theme, ThemeSwitcher.setTheme] = useState(ThemeSwitcher.light);
   Pref.get('theme', 'light').then(val => {
-    if (val !== 'light') {
+    if (val === 'dark') {
       ThemeSwitcher.setTheme(ThemeSwitcher.dark);
     }
   });
