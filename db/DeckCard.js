@@ -1,8 +1,9 @@
 import {uuid} from 'uuidv4';
+import {AuthHelper} from './AuthHelper';
 
 export class DeckCard {
   id: string = uuid();
-  box: number;
+  box: {};
   question: string;
   answer: string;
   picture: string;
@@ -11,7 +12,7 @@ export class DeckCard {
   multipleChoiceItems: MultipleChoiceItem[];
 
   constructor() {
-    this.box = 0;
+    this.box = {};
     this.question = '';
     this.answer = '';
     this.picture = null;
@@ -23,9 +24,10 @@ export class DeckCard {
   static fromJSON(json: any): DeckCard {
     const card = new DeckCard();
 
+    card.id = json.id;
     card.question = json.question;
     card.answer = json.answer;
-    card.box = 'box' in json ? json.box : 0;
+    card.box = 'box' in json ? json.box : {};
     card.picture = 'picture' in json ? json.picture : null;
     card.recording = 'recording' in json ? json.recording : null;
     card.list = 'list' in json ? json.list : null;
@@ -35,6 +37,16 @@ export class DeckCard {
         : null;
 
     return card;
+  }
+
+  setCurrentBoxForUser(newBox: number) {
+    const userId = AuthHelper.userId();
+    this.box[userId] = newBox;
+  }
+
+  getCurrentBoxForUser() {
+    const userId = AuthHelper.userId();
+    return userId in this.box ? this.box[userId] : 0;
   }
 }
 

@@ -22,6 +22,7 @@ import FileUploadHelper from '../../../../db/FileUploadHelper';
 import DeckAnswerList from '../component/DeckAnswerList';
 import DeckMultipleChoiceList from '../component/DeckMultipleChoiceList';
 import {DeckCrudHelper} from '../../../../db/DeckCrudHelper';
+import AudioPlayer from '../component/AudioPlayer';
 
 export class NewDeckCardScreen extends BaseDeckScreen {
   styles = StyleSheet.create({
@@ -62,7 +63,10 @@ export class NewDeckCardScreen extends BaseDeckScreen {
   onDeckLoaded(deck) {
     const cardId = this.getNavigationParam('cardId');
     if (cardId !== 'new') {
+      console.log(cardId);
+      console.log(deck);
       const card = deck.cards.find(item => item.id === cardId);
+      console.log(card);
       if (!card) {
         return;
       }
@@ -255,13 +259,9 @@ export class NewDeckCardScreen extends BaseDeckScreen {
             <View style={this.styles.subSection}>
               <Divider />
               <Caption style={this.styles.subSectionHint}>AUFNAHME</Caption>
-              <IconButton
-                icon="play"
-                size={32}
-                onPress={() => {
-                  this.startPlayback();
-                }}
+              <AudioPlayer
                 style={this.styles.subSectionContent}
+                recording={this.state.recording}
               />
             </View>
           )}
@@ -336,18 +336,6 @@ export class NewDeckCardScreen extends BaseDeckScreen {
         });
       },
     );
-  }
-
-  async startPlayback() {
-    await TrackPlayer.setupPlayer();
-
-    await TrackPlayer.add({
-      id: 'recording',
-      url: this.state.recording,
-      title: 'Aufnahme',
-    });
-
-    await TrackPlayer.play();
   }
 
   isHandlingMedia() {

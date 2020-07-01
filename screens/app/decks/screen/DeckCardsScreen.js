@@ -18,7 +18,9 @@ export class DeckCardsScreen extends BaseDeckScreen {
     if (this.state.box === -1) {
       this.state.cards = deck.cards;
     } else {
-      this.state.cards = deck.cards.filter(card => card.box === this.state.box);
+      this.state.cards = deck.cards.filter(
+        card => card.getCurrentBoxForUser() === this.state.box,
+      );
     }
   }
 

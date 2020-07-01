@@ -59,7 +59,7 @@ export default class DeckAnswerList extends Component {
             title={item}
             style={styles.listItem}
             right={props => {
-              return (
+              return this.props.isEditing ? (
                 <IconButton
                   {...props}
                   icon="delete"
@@ -67,7 +67,7 @@ export default class DeckAnswerList extends Component {
                   size={24}
                   onPress={() => this.props.onDelete(item)}
                 />
-              );
+              ) : null;
             }}
           />
         );

@@ -43,7 +43,7 @@ export class DeckQueryHelper {
   }
 
   static findDeckById(id, onResult, onError) {
-    firestore()
+    return firestore()
       .collection('decks')
       .doc(id)
       .onSnapshot(snapshot => {

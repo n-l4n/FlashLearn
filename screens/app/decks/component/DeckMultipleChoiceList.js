@@ -3,6 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {Checkbox, IconButton, List, TextInput} from 'react-native-paper';
 import {appColors} from '../../../../theme';
 import {MultipleChoiceItem} from '../../../../db/DeckCard';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
   listItem: {
@@ -59,11 +60,15 @@ export default class DeckMultipleChoiceList extends Component {
             key={item.text}
             title={item.text}
             description={
-              item.isCorrect ? 'Korrekte Antwort' : 'Falsche Antwort'
+              this.props.isShowingAnswers
+                ? item.isCorrect
+                  ? 'Korrekte Antwort'
+                  : 'Falsche Antwort'
+                : null
             }
             style={styles.listItem}
             right={props => {
-              return (
+              return this.props.isEditing ? (
                 <IconButton
                   {...props}
                   icon="delete"
@@ -71,7 +76,7 @@ export default class DeckMultipleChoiceList extends Component {
                   size={24}
                   onPress={() => this.props.onDelete(item)}
                 />
-              );
+              ) : null;
             }}
           />
         );
@@ -117,3 +122,14 @@ export default class DeckMultipleChoiceList extends Component {
     });
   }
 }
+
+DeckMultipleChoiceList.propTypes = {
+  isEditing: PropTypes.bool,
+  isShowingAnswers: PropTypes.bool,
+  onNewItem: PropTypes.func,
+  onDelete: PropTypes.func,
+};
+
+DeckMultipleChoiceList.defaultProps = {
+  isShowingAnswers: true,
+};

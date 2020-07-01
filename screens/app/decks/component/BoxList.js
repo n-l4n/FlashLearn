@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
 import {Card, IconButton, Text, Title} from 'react-native-paper';
+import {AuthHelper} from '../../../../db/AuthHelper';
 
 const styles = StyleSheet.create({
   cardListContainer: {
@@ -37,7 +38,7 @@ export default class DeckList extends Component {
         numColumns={2}
         renderItem={listItem => {
           const itemCount = this.props.deck.cards.filter(
-            card => card.box === listItem.item,
+            card => card.getCurrentBoxForUser() === listItem.item,
           ).length;
           return (
             <Card

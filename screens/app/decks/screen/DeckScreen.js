@@ -21,7 +21,16 @@ export class DeckScreen extends BaseDeckScreen {
             });
           }}
         />
-        <Appbar.Action icon="play-circle" onPress={() => {}} />
+        <Appbar.Action
+          icon="play-circle"
+          onPress={() => {
+            this.navigation.navigate('Learn', {
+              deckId: this.state.deck.id,
+              box: -1,
+              count: 10,
+            });
+          }}
+        />
       </Appbar.Header>
     );
   }

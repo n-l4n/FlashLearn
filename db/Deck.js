@@ -1,3 +1,5 @@
+import {DeckCard} from './DeckCard';
+
 export class Deck {
   id;
   ownerId;
@@ -17,7 +19,13 @@ export class Deck {
     deck.ownerId = json.ownerId;
     deck.name = json.name;
     deck.shares = 'shares' in json ? json.shares : [];
-    deck.cards = 'cards' in json ? json.cards : [];
+    const cards = [];
+    if ('cards' in json) {
+      for (const card of json.cards) {
+        cards.push(DeckCard.fromJSON(card));
+      }
+    }
+    deck.cards = cards;
     return deck;
   }
 }

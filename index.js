@@ -9,6 +9,8 @@ import * as React from 'react';
 import {AppRegistry} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
+import * as TrackPlayer from 'react-native-track-player';
+import AudioPlayerService from './screens/app/decks/component/AudioPlayerService';
 
 const theme = {
   ...DefaultTheme,
@@ -28,3 +30,4 @@ export default function Main() {
 }
 
 AppRegistry.registerComponent(appName, () => Main);
+TrackPlayer.registerPlaybackService(() => AudioPlayerService);

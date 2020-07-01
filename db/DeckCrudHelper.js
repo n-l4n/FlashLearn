@@ -24,7 +24,8 @@ export class DeckCrudHelper {
       .then(() => {
         onResult(true);
       })
-      .catch(() => {
+      .catch(error => {
+        console.log(error);
         onResult(false);
       });
   }
@@ -48,7 +49,18 @@ export class DeckCrudHelper {
   static addCardToDeck(deck, card, onResult) {
     deck.cards.push(card);
 
-    this.updateDeck(deck, onResult);
+    firestore()
+      .collection('decks')
+      .doc(deck.id)
+      .update({
+        cards: firestore.FieldValue.arrayUnion(card),
+      })
+      .then(() => {
+        onResult(true);
+      })
+      .catch(() => {
+        onResult(false);
+      });
   }
 
   static updateCardInDeck(deck, card, onResult) {

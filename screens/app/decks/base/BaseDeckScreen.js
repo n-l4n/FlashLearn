@@ -10,6 +10,7 @@ import {Deck} from '../../../../db/Deck';
 import BaseStatefulScreen from './BaseStatefulScreen';
 import BaseContentLoadScreen from './BaseContentLoadScreen';
 export class BaseDeckScreen extends BaseContentLoadScreen {
+  deckSub;
   constructor(props) {
     super(props);
     this.state = this.buildBaseState();
@@ -35,7 +36,7 @@ export class BaseDeckScreen extends BaseContentLoadScreen {
       this.setIsContentReady(true);
       return;
     }
-    DeckQueryHelper.findDeckById(
+    this.deckSub = DeckQueryHelper.findDeckById(
       deckId,
       deck => {
         if (!deck) {
@@ -49,6 +50,12 @@ export class BaseDeckScreen extends BaseContentLoadScreen {
         console.log(error);
       },
     );
+  }
+
+  componentWillUnmount(): void {
+    if (this.deckSub) {
+      this.deckSub();
+    }
   }
 
   buildCustomState() {

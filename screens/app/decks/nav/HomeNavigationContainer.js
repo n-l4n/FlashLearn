@@ -6,6 +6,7 @@ import {DeckScreen} from '../screen/DeckScreen';
 import {DeckShareScreen} from '../screen/DeckShareScreen';
 import {NewDeckCardScreen} from '../screen/NewDeckCardScreen';
 import {DeckCardsScreen} from '../screen/DeckCardsScreen';
+import LearnScreen from '../screen/LearnScreen';
 
 export function HomeNavigationContainer() {
   const Stack = createStackNavigator();
@@ -18,6 +19,7 @@ export function HomeNavigationContainer() {
       <Stack.Screen name="ShareDeck" component={DeckShareScreen} />
       <Stack.Screen name="NewDeckCard" component={NewDeckCardScreen} />
       <Stack.Screen name="Box" component={DeckCardsScreen} />
+      <Stack.Screen name="Learn" component={LearnScreen} />
     </Stack.Navigator>
   );
 }
