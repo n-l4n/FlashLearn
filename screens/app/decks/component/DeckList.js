@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
 import {Card, IconButton, Text, Title} from 'react-native-paper';
+import {AuthHelper} from '../../../../db/AuthHelper';
 
 const styles = StyleSheet.create({
   cardListContainer: {
@@ -51,13 +52,15 @@ export default class DeckList extends Component {
                     size={20}
                     onPress={() => this.props.onLearn(listItem.item)}
                   />
-                  <IconButton
-                    icon="pencil"
-                    size={20}
-                    onPress={() => {
-                      this.props.onEdit(listItem.item);
-                    }}
-                  />
+                  {listItem.item.ownerId === AuthHelper.userId() && (
+                    <IconButton
+                      icon="pencil"
+                      size={20}
+                      onPress={() => {
+                        this.props.onEdit(listItem.item);
+                      }}
+                    />
+                  )}
                 </View>
               </Card.Content>
             </Card>
