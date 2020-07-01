@@ -6,6 +6,7 @@ import {BaseDeckScreen} from '../base/BaseDeckScreen';
 import BoxList from '../component/BoxList';
 import {appColors} from '../../../../theme';
 import {View, StyleSheet} from 'react-native';
+import {AuthHelper} from '../../../../db/AuthHelper';
 
 export class DeckScreen extends BaseDeckScreen {
   buildAppbar() {
@@ -13,14 +14,16 @@ export class DeckScreen extends BaseDeckScreen {
       <Appbar.Header style={authStyles.appBar}>
         <Appbar.BackAction onPress={() => this.navigation.goBack()} />
         <Appbar.Content title={this.state.deck.name} />
-        <Appbar.Action
-          icon="share"
-          onPress={() => {
-            this.navigation.navigate('ShareDeck', {
-              deckId: this.state.deck.id,
-            });
-          }}
-        />
+        {this.state.deck.ownerId === AuthHelper.userId() && (
+          <Appbar.Action
+            icon="share"
+            onPress={() => {
+              this.navigation.navigate('ShareDeck', {
+                deckId: this.state.deck.id,
+              });
+            }}
+          />
+        )}
         <Appbar.Action
           icon="play-circle"
           onPress={() => {
