@@ -99,7 +99,7 @@ export class NewDeckCardScreen extends BaseDeckScreen {
         <Appbar.BackAction onPress={() => this.navigation.goBack()} />
         <Appbar.Content
           title={
-            this.getNavigationParam('carId') !== 'new'
+            this.getNavigationParam('cardId') !== 'new'
               ? 'Karte bearbeiten'
               : 'Neue Karte'
           }
