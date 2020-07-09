@@ -1,5 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import DeckComplaint from './DeckComplaint';
+import {AuthHelper} from './AuthHelper';
 
 export class DeckCrudHelper {
   static createDeck(deck, onResult) {
@@ -90,6 +91,7 @@ export class DeckCrudHelper {
     const complaint = new DeckComplaint();
     complaint.deckId = deck.id;
     complaint.cardId = card.id;
+    complaint.ownerId = AuthHelper.userId();
     complaint.message = message;
 
     firestore()

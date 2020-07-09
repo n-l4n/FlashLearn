@@ -44,19 +44,7 @@ export class DeckQueryHelper {
   }
 
   static findDeckComplaints(decks, onResult, onError) {
-    let query = firestore().collection('complaints').where('isDone', '==', false);
-    let whereCount = 0;
-    for (const deck of decks) {
-      if (!deck.ownerId === AuthHelper.userId()) {
-        continue;
-      }
-      query = query.where('deckId', '==', deck.id);
-      whereCount++;
-    }
-    if (whereCount === 0) {
-      onResult([]);
-      return;
-    }
+    let query = firestore().collection('complaints').where('isDone', '==', false).where('ownerId', '==', AuthHelper.userId());
     query.onSnapshot(snapshot => {
       if (snapshot && snapshot._docs) {
         const complaints = [];
