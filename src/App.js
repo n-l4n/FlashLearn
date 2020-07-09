@@ -8,9 +8,9 @@
 
 import React, {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
-import {AuthNavigationContainer} from './src/app/screens/auth/AuthNavigationContainer';
-import {AppNavigationContainer} from './src/app/screens/app/AppNavigationContainer';
-import {LoadingScreen} from './src/app/screens/auth/LoadingScreen';
+import {AuthNavigationContainer} from './app/screens/auth/AuthNavigationContainer';
+import {AppNavigationContainer} from './app/screens/app/AppNavigationContainer';
+import {LoadingScreen} from './app/screens/auth/LoadingScreen';
 
 const App: () => React$Node = () => {
   const [initializing, setInitializing] = useState(true);

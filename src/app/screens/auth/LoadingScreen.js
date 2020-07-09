@@ -2,7 +2,7 @@ import {SafeAreaView, View} from 'react-native';
 import {authStyles} from './AuthStyles';
 import {FAB, Headline, ProgressBar} from 'react-native-paper';
 import React from 'react';
-import {globalStyles} from '../../../../GlobalStyles';
+import {globalStyles} from '../../../GlobalStyles';
 import ThemedStatusBar from '../app/component/ThemedStatusBar';
 import {ThemeSwitcher} from '../../../../index';
 

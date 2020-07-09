@@ -2,7 +2,7 @@ import BaseStatefulScreen from './BaseStatefulScreen';
 import {ActivityIndicator, Appbar} from 'react-native-paper';
 import {authStyles} from '../../../auth/AuthStyles';
 import {SafeAreaView, View} from 'react-native';
-import {appColors, themedBackgroundColor} from '../../../../../../theme';
+import {appColors, themedBackgroundColor} from '../../../../../theme';
 import React from 'react';
 import {ThemeSwitcher} from '../../../../../../index';
 import ThemedStatusBar from '../../component/ThemedStatusBar';

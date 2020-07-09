@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {DeckCard} from './src/app/db/DeckCard';
+import {DeckCard} from './app/db/DeckCard';
 
 export class BaseState {
   loading;

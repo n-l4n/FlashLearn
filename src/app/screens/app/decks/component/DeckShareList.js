@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import {Avatar, IconButton, List} from 'react-native-paper';
 import md5 from 'blueimp-md5';
-import {appColors} from '../../../../../../theme';
+import {appColors} from '../../../../../theme';
 
 const styles = StyleSheet.create({
   listItem: {

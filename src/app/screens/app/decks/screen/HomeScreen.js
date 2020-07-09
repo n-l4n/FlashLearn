@@ -1,7 +1,7 @@
 import {authStyles} from '../../../auth/AuthStyles';
 import {Appbar, FAB} from 'react-native-paper';
 import React from 'react';
-import {globalStyles} from '../../../../../../GlobalStyles';
+import {globalStyles} from '../../../../../GlobalStyles';
 import auth from '@react-native-firebase/auth';
 import {DeckQueryHelper} from '../../../../db/DeckQueryHelper';
 import DeckList from '../component/DeckList';

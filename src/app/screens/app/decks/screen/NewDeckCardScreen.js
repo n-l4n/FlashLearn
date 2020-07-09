@@ -9,10 +9,10 @@ import {
   Snackbar,
   TextInput,
 } from 'react-native-paper';
-import {globalStyles} from '../../../../../../GlobalStyles';
+import {globalStyles} from '../../../../../GlobalStyles';
 import React, {createRef} from 'react';
-import {BaseCardState} from '../../../../../../BaseState';
-import {appColors} from '../../../../../../theme';
+import {BaseCardState} from '../../../../../BaseState';
+import {appColors} from '../../../../../theme';
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
 import Camera from '../component/Camera';
 import AudioRecorder from '../component/AudioRecorder';

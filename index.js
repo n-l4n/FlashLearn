@@ -7,12 +7,12 @@ import 'react-native-gesture-handler';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import React, {useState} from 'react';
 import {AppRegistry} from 'react-native';
-import App from './App';
+import App from './src/App';
 import {name as appName} from './app.json';
 import * as TrackPlayer from 'react-native-track-player';
 import AudioPlayerService from './src/app/screens/app/decks/component/AudioPlayerService';
-import {appColors} from './theme';
-import Pref from './PreferenceHelper';
+import {appColors} from './src/theme';
+import Pref from './src/PreferenceHelper';
 
 export class ThemeSwitcher {
   static light = {

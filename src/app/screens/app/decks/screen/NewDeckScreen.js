@@ -1,9 +1,9 @@
 import {View} from 'react-native';
 import {authStyles} from '../../../auth/AuthStyles';
 import {Appbar, FAB, Snackbar, TextInput} from 'react-native-paper';
-import {globalStyles} from '../../../../../../GlobalStyles';
+import {globalStyles} from '../../../../../GlobalStyles';
 import React from 'react';
-import {appColors} from '../../../../../../theme';
+import {appColors} from '../../../../../theme';
 import {DeckCrudHelper} from '../../../../db/DeckCrudHelper';
 import {AuthHelper} from '../../../../db/AuthHelper';
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
@@ -83,12 +83,11 @@ export class NewDeckScreen extends BaseDeckScreen {
       this.onDeckChangeResult(success),
     );
   }
-    deleteDeck() {
-        DeckCrudHelper.deleteDeck(this.state.deck, success =>
-            this.onDeckChangeResult(success),
-        );
-    }
-
+  deleteDeck() {
+    DeckCrudHelper.deleteDeck(this.state.deck, success =>
+      this.onDeckChangeResult(success),
+    );
+  }
 
   onDeckChangeResult(success: boolean) {
     this.setIsLoading(false);

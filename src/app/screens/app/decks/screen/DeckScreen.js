@@ -1,10 +1,10 @@
 import {authStyles} from '../../../auth/AuthStyles';
 import {Appbar, Button, FAB} from 'react-native-paper';
-import {globalStyles} from '../../../../../../GlobalStyles';
+import {globalStyles} from '../../../../../GlobalStyles';
 import React from 'react';
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
 import BoxList from '../component/BoxList';
-import {appColors} from '../../../../../../theme';
+import {appColors} from '../../../../../theme';
 import {AuthHelper} from '../../../../db/AuthHelper';
 
 export class DeckScreen extends BaseDeckScreen {

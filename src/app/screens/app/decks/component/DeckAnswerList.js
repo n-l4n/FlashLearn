@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {IconButton, List, TextInput} from 'react-native-paper';
-import {appColors} from '../../../../../../theme';
+import {appColors} from '../../../../../theme';
 
 const styles = StyleSheet.create({
   listItem: {

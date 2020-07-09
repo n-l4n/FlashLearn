@@ -1,5 +1,5 @@
 import {DefaultTheme} from 'react-native-paper';
-import {ThemeSwitcher} from './index';
+import {ThemeSwitcher} from '../index';
 
 export const appColors = {
   primary: '#64B5F6',

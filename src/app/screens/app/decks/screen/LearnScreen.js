@@ -20,7 +20,7 @@ import AudioPlayer from '../component/AudioPlayer';
 import DeckAnswerList from '../component/DeckAnswerList';
 import Image from 'react-native-scalable-image';
 import {DeckCrudHelper} from '../../../../db/DeckCrudHelper';
-import {appColors} from '../../../../../../theme';
+import {appColors} from '../../../../../theme';
 import {AuthHelper} from '../../../../db/AuthHelper';
 
 export default class LearnScreen extends BaseDeckScreen {

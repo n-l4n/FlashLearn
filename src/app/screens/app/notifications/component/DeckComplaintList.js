@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Dimensions, FlatList, StyleSheet} from 'react-native';
 import {IconButton, List} from 'react-native-paper';
-import {appColors} from '../../../../../../theme';
+import {appColors} from '../../../../../theme';
 
 const styles = StyleSheet.create({
   cardListContainer: {

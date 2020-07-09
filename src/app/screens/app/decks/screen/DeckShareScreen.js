@@ -1,9 +1,15 @@
-import {Appbar, Caption, Divider, IconButton, TextInput} from 'react-native-paper';
+import {
+  Appbar,
+  Caption,
+  Divider,
+  IconButton,
+  TextInput,
+} from 'react-native-paper';
 import React from 'react';
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
 import {authStyles} from '../../../auth/AuthStyles';
 import {StyleSheet, View} from 'react-native';
-import {appColors} from '../../../../../../theme';
+import {appColors} from '../../../../../theme';
 import {DeckCrudHelper} from '../../../../db/DeckCrudHelper';
 import DeckShareList from '../component/DeckShareList';
 

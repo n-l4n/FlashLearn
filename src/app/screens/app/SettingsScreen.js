@@ -5,7 +5,7 @@ import React from 'react';
 import ThemedStatusBar from './component/ThemedStatusBar';
 import {ThemeSwitcher} from '../../../../index';
 import BaseStatefulScreen from './decks/base/BaseStatefulScreen';
-import Pref from '../../../../PreferenceHelper';
+import Pref from '../../../PreferenceHelper';
 import RNRestart from 'react-native-restart';
 
 export class SettingsScreen extends BaseStatefulScreen {
