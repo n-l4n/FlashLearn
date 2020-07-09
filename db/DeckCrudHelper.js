@@ -91,7 +91,7 @@ export class DeckCrudHelper {
     const complaint = new DeckComplaint();
     complaint.deckId = deck.id;
     complaint.cardId = card.id;
-    complaint.ownerId = AuthHelper.userId();
+    complaint.ownerId = deck.ownerId;
     complaint.message = message;
 
     firestore()
