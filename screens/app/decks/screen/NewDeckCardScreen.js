@@ -1,7 +1,14 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import Image from 'react-native-scalable-image';
 import {authStyles} from '../../../auth/AuthStyles';
-import {Appbar, Caption, Divider, FAB, Snackbar, TextInput} from 'react-native-paper';
+import {
+  Appbar,
+  Caption,
+  Divider,
+  FAB,
+  Snackbar,
+  TextInput,
+} from 'react-native-paper';
 import {globalStyles} from '../../../../GlobalStyles';
 import React, {createRef} from 'react';
 import {BaseCardState} from '../../../../BaseState';
@@ -54,10 +61,7 @@ export class NewDeckCardScreen extends BaseDeckScreen {
   onDeckLoaded(deck) {
     const cardId = this.getNavigationParam('cardId');
     if (cardId !== 'new') {
-      console.log(cardId);
-      console.log(deck);
       const card = deck.cards.find(item => item.id === cardId);
-      console.log(card);
       if (!card) {
         return;
       }
@@ -93,7 +97,13 @@ export class NewDeckCardScreen extends BaseDeckScreen {
     return (
       <Appbar.Header style={authStyles.appBar}>
         <Appbar.BackAction onPress={() => this.navigation.goBack()} />
-        <Appbar.Content title="Neue Karte" />
+        <Appbar.Content
+          title={
+            this.getNavigationParam('carId') !== 'new'
+              ? 'Karte bearbeiten'
+              : 'Neue Karte'
+          }
+        />
         {this.getNavigationParam('cardId') !== 'new' && (
           <Appbar.Action icon={'delete'} onPress={() => this.deleteCard()} />
         )}
