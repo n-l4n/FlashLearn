@@ -1,5 +1,17 @@
 import {BaseDeckScreen} from '../base/BaseDeckScreen';
-import {Appbar, Button, Caption, Card, Divider, FAB, Modal, Portal, Text, TextInput, Title} from 'react-native-paper';
+import {
+  Appbar,
+  Button,
+  Caption,
+  Card,
+  Divider,
+  FAB,
+  Modal,
+  Portal,
+  Text,
+  TextInput,
+  Title,
+} from 'react-native-paper';
 import {authStyles} from '../../../auth/AuthStyles';
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
@@ -9,6 +21,7 @@ import DeckAnswerList from '../component/DeckAnswerList';
 import Image from 'react-native-scalable-image';
 import {DeckCrudHelper} from '../../../../db/DeckCrudHelper';
 import {appColors} from '../../../../theme';
+import {AuthHelper} from '../../../../db/AuthHelper';
 
 export default class LearnScreen extends BaseDeckScreen {
   styles = StyleSheet.create({
@@ -134,12 +147,14 @@ export default class LearnScreen extends BaseDeckScreen {
       <Appbar.Header style={authStyles.appBar}>
         <Appbar.BackAction onPress={() => this.navigation.goBack()} />
         <Appbar.Content title="Lernen" />
-        <Appbar.Action
-          icon="alert-decagram"
-          onPress={() => {
-            this.showModal();
-          }}
-        />
+        {this.state.deck.ownerId !== AuthHelper.userId() && (
+          <Appbar.Action
+            icon="alert-decagram"
+            onPress={() => {
+              this.showModal();
+            }}
+          />
+        )}
       </Appbar.Header>
     );
   }
