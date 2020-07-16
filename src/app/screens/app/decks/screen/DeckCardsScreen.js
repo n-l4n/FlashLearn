@@ -37,6 +37,7 @@ export class DeckCardsScreen extends BaseDeckScreen {
         />
         <Appbar.Action
           icon="play-circle"
+          disabled={this.state.cards.length === 0}
           onPress={() => {
             this.navigation.navigate('Learn', {
               deckId: this.state.deck.id,

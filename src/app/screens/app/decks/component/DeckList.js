@@ -50,6 +50,7 @@ export default class DeckList extends Component {
                   <IconButton
                     icon="play-circle"
                     size={20}
+                    disabled={listItem.item.cards.length === 0}
                     onPress={() => this.props.onLearn(listItem.item)}
                   />
                   {listItem.item.ownerId === AuthHelper.userId() && (
